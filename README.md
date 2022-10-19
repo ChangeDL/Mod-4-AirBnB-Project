@@ -1474,3 +1474,11 @@ Return spots filtered by query parameters.
       }
     }
     ```
+    DATABASE SCHEMA
+    
+    ![AirBnBTables](https://user-images.githubusercontent.com/108757380/196792663-bfdb879b-3b60-4f15-b0f9-e212c012b397.png)
+    
+    ![AirBnBDataBaseSchema](https://user-images.githubusercontent.com/108757380/196792684-59da0e10-7126-4ecf-843e-9a53bfdf5147.png)
+
+
+    
