@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/ChangeDL/Mod-4-AirBnB-Project/issues"
   },
-  "homepage": "https://github.com/ChangeDL/Mod-4-AirBnB-Project#readme"
+  "homepage": "https://github.com/ChangeDL/Mod-4-AirBnB-Project#readme",
+  "dependencies": {
+    "pg": "^8.8.0"
+  }
 }
