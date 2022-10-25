@@ -84,8 +84,9 @@ router.get('/:spotId', async (req, res) => {
                 ]
             ]
         },
+        group: ['Spots.id', 'SpotImages.url']
     })
-    if (requestedSpot.id === null) {
+    if (!requestedSpot) {
         res.status(404);
         return res.json({
             message: "Spot couldn't be found",
