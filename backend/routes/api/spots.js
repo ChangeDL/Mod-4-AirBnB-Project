@@ -7,8 +7,10 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
     const allSpots = await Spots.findAll({
-        include: [{ model: SpotImages, where: { preview: true }, attributes: [] },
-        { model: Review, attributes: [] }],
+        include: [
+            { model: SpotImages, where: { preview: true }, attributes: [] },
+            { model: Review, attributes: [] }
+        ],
         attributes: {
             include: [
                 [
@@ -82,6 +84,7 @@ router.get('/:spotId', async (req, res) => {
                 ]
             ]
         },
+
         group: ['Spots.id', 'SpotImages.id', 'Owner.id']
     })
     if (!requestedSpot) {
