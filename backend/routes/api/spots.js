@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
                 [sequelize.col('SpotImages.url'), 'previewImage']
             ]
         },
-        group: ['Spots.id']
+        group: ['Spots.id', 'SpotImages.url']
     });
     res.json(allSpots)
 })
@@ -39,7 +39,7 @@ router.get('/current', requireAuth, async (req, res) => {
                 [sequelize.col('SpotImages.url'), 'previewImage']
             ]
         },
-        group: ['Spots.id']
+        group: ['Spots.id', 'SpotImages.url']
     })
     res.json(UserSpots)
 })
