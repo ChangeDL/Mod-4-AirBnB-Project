@@ -82,7 +82,7 @@ router.get('/:spotId', async (req, res) => {
                 ]
             ]
         },
-        group: ['Spots.id', 'SpotImages.id', 'Owner.id', 'Review.stars']
+        group: ['Spots.id', 'SpotImages.id', 'Owner.id']
     })
     if (!requestedSpot) {
         res.status(404);
