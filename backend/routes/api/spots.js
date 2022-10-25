@@ -84,6 +84,7 @@ router.get('/:spotId', async (req, res) => {
                 ]
             ]
         },
+        group: ['Spots.id', 'SpotImages.url']
     })
     if (requestedSpot.id === null) {
         res.status(404);
