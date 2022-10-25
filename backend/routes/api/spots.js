@@ -7,8 +7,10 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
     const allSpots = await Spots.findAll({
-        include: [{ model: SpotImages, where: { preview: true }, attributes: [] },
-        { model: Review, attributes: [] }],
+        include: [
+            { model: SpotImages, where: { preview: true }, attributes: [] },
+            { model: Review, attributes: [] }
+        ],
         attributes: {
             include: [
                 [
@@ -18,7 +20,7 @@ router.get('/', async (req, res) => {
                 [sequelize.col('SpotImages.url'), 'previewImage']
             ]
         },
-        group: 'Spots.id'
+        group: ['Spots.id']
     });
     res.json(allSpots)
 })
@@ -39,7 +41,7 @@ router.get('/current', requireAuth, async (req, res) => {
                 [sequelize.col('SpotImages.url'), 'previewImage']
             ]
         },
-        group: 'Spots.id'
+        group: ['Spots.id']
     })
     res.json(UserSpots)
 })
