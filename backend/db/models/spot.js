@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       address: {
         type: DataTypes.STRING,
         validate: {
-          isAlphanumeric: true,
+
         }
       },
       city: DataTypes.STRING,
@@ -40,6 +40,11 @@ module.exports = (sequelize, DataTypes) => {
     }, {
     sequelize,
     modelName: 'Spots',
+    scopes: {
+      updateSpot: {
+        attributes: { exclude: ["createdAt", 'updatedAt'] }
+      },
+    }
   });
   return Spots;
 };
