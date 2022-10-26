@@ -15,9 +15,9 @@ module.exports = {
     return queryInterface.bulkInsert('Spots', [
       {
         ownerId: 1,
-        address: '19170 nw 19th st',
-        city: 'Pembroke Pines',
-        state: 'Florida',
+        address: '10 nw 10th st',
+        city: 'Broke Hines',
+        state: 'Flor-ida',
         country: 'United States',
         lat: 63.18414,
         lng: -10.45119,
@@ -26,13 +26,49 @@ module.exports = {
         price: 205.69
       },
       {
-        ownerId: 1,
-        address: '296 sw 18th ave',
-        city: 'Pembroke Pines',
+        ownerId: 2,
+        address: '24496 sw 18th ave',
+        city: 'Pemke Pies',
         state: 'Florida',
         country: 'United States',
-        lat: 163.18454,
-        lng: 10.45619,
+        lat: 16663.18454,
+        lng: 10.475619,
+        name: 'Home',
+        description: 'ere',
+        price: 699.69
+      },
+      {
+        ownerId: 2,
+        address: '29553246 sw 18th ave',
+        city: 'Pemke Pies',
+        state: 'Florida',
+        country: 'United States',
+        lat: 14363.18454,
+        lng: 10.4509619,
+        name: 'Home',
+        description: 'ere',
+        price: 699.69
+      },
+      {
+        ownerId: 3,
+        address: '224324396 sw 18th ave',
+        city: 'Pemke Pies',
+        state: 'Florida',
+        country: 'United States',
+        lat: 163.184354,
+        lng: 1430.45619,
+        name: 'Home',
+        description: 'ere',
+        price: 699.69
+      },
+      {
+        ownerId: 3,
+        address: '295356 sw 1853th ave',
+        city: 'Pemke Pies',
+        state: 'Florida',
+        country: 'United States',
+        lat: 163.184554,
+        lng: 10.4561779,
         name: 'Home',
         description: 'ere',
         price: 699.69

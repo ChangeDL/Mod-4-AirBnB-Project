@@ -62,20 +62,20 @@ module.exports = {
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
     });
-    await queryInterface.addIndex(
-      'Spots',
-      ['lat', 'lng'],
-      {
-        unique: true
-      }
-    )
+    // await queryInterface.addIndex(
+    //   'Spots',
+    //   ['lat', 'lng'],
+    //   {
+    //     unique: true
+    //   }
+    // )
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Spots');
-    await queryInterface.removeIndex('Spots',
-      ['lat', 'lng'],
-      {
-        unique: true
-      })
+    // await queryInterface.removeIndex('Spots',
+    //   ['lat', 'lng'],
+    //   {
+    //     unique: true
+    //   })
   }
 };
