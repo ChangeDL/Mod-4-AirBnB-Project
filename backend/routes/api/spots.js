@@ -7,8 +7,9 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
     const allSpots = await Spots.findAll({
+        subQuery: false,
         include: [
-            { model: SpotImages, where: { preview: true }, attributes: [] },
+            { model: SpotImages, attributes: [] },
             { model: Review, attributes: [] }
         ],
         attributes: {
@@ -22,6 +23,7 @@ router.get('/', async (req, res) => {
         },
         group: ['Spots.id', 'SpotImages.url']
     });
+    console.log(allSpots)
     res.json(allSpots)
 })
 
@@ -30,7 +32,7 @@ router.get('/current', requireAuth, async (req, res) => {
         where: {
             ownerId: req.user.id
         },
-        include: [{ model: SpotImages, where: { preview: true }, attributes: [] },
+        include: [{ model: SpotImages, attributes: [] },
         { model: Review, attributes: [] }],
         attributes: {
             include: [
@@ -132,7 +134,8 @@ router.get('/:spotId', async (req, res) => {
             ]
         },
 
-        group: ['Spots.id', 'SpotImages.id', 'Owner.id']
+        group: ['Spots.id', 'SpotImages.id', 'Owner.id'],
+
     })
     if (!requestedSpot) {
         res.status(404);

@@ -19,22 +19,22 @@ module.exports = {
         preview: true
       },
       {
-        spotId: 1,
-        url: 'image.url',
-        preview: false
-      },
-      {
-        spotId: 2,
-        url: 'image.url',
-        preview: true
-      },
-      {
         spotId: 2,
         url: 'image.url',
         preview: false
       },
       {
         spotId: 3,
+        url: 'image.url',
+        preview: false
+      },
+      {
+        spotId: 4,
+        url: 'image.url',
+        preview: true
+      },
+      {
+        spotId: 5,
         url: 'image.url',
         preview: true
       },

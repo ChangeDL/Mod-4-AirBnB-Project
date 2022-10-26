@@ -26,19 +26,19 @@ module.exports = {
         stars: 3
       },
       {
-        spotId: 2,
+        spotId: 3,
         userId: 2,
         review: "this issfeg a test review",
         stars: 4
       },
       {
-        spotId: 1,
+        spotId: 5,
         userId: 1,
         review: "this is afsfsf test review",
         stars: 4
       },
       {
-        spotId: 1,
+        spotId: 4,
         userId: 2,
         review: "this is sdgsfa test review",
         stars: 4
