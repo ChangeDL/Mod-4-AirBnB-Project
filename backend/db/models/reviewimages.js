@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      ReviewImages.belongsTo(models.Review, { foreignKey: 'reviewId', onDelete: 'CASCADE' })
+      ReviewImages.belongsTo(models.Review, { foreignKey: 'reviewId' })
     }
   }
   ReviewImages.init({
@@ -20,6 +20,11 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'ReviewImages',
+    defaultScope: {
+      attributes: {
+        exclude: ['reviewId']
+      }
+    }
   });
   return ReviewImages;
 };
