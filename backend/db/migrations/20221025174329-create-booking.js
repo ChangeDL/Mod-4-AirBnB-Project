@@ -53,5 +53,17 @@ module.exports = {
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Bookings');
+    await queryInterface.removeIndex('Bookings',
+      ['spotId', 'startDate'],
+      {
+        unique: true
+      }
+    )
+    await queryInterface.removeIndex('Bookings',
+      ['userId', 'startDate'],
+      {
+        unique: true
+      }
+    )
   }
 };

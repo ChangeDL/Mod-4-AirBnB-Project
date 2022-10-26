@@ -16,31 +16,31 @@ module.exports = {
       {
         spotId: 1,
         userId: 2,
-        review: "this is a test review",
+        review: "this is a test revfesfiew",
         stars: 4
       },
       {
         spotId: 2,
         userId: 2,
-        review: "this is a test review",
+        review: "this isedfses a test review",
         stars: 3
       },
       {
         spotId: 2,
         userId: 2,
-        review: "this is a test review",
+        review: "this issfeg a test review",
         stars: 4
       },
       {
         spotId: 1,
         userId: 1,
-        review: "this is a test review",
+        review: "this is afsfsf test review",
         stars: 4
       },
       {
         spotId: 1,
         userId: 2,
-        review: "this is a test review",
+        review: "this is sdgsfa test review",
         stars: 4
       },
     ])

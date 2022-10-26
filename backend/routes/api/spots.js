@@ -69,6 +69,14 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
 })
 
 router.get('/:spotId/reviews', async (req, res) => {
+    const spotCheck = await Spots.findOne({ where: { id: req.params.spotId } })
+    if (!spotCheck) {
+        res.status(404);
+        return res.json({
+            message: "Spot couldn't be found",
+            statusCode: 404
+        })
+    }
     const reviewsForSpot = await Review.findAll({
         where: {
             spotId: req.params.spotId
@@ -82,13 +90,6 @@ router.get('/:spotId/reviews', async (req, res) => {
             }
         ]
     })
-    if (!reviewsForSpot) {
-        res.status(404);
-        return res.json({
-            message: "Spot couldn't be found",
-            statusCode: 404
-        })
-    }
     res.json(reviewsForSpot)
 })
 
@@ -206,4 +207,6 @@ router.delete('/:spotId', requireAuth, async (req, res) => {
         statusCode: 200
     })
 })
+
+
 module.exports = router;
