@@ -131,11 +131,8 @@ router.get('/:spotId', async (req, res) => {
                 ]
             ]
         },
-<<<<<<<< < Temporary merge branch 1
-        group: ['Spots.id', 'SpotImages.url']
-=========
+
         group: ['Spots.id', 'SpotImages.id', 'Owner.id']
->>>>>>>>> Temporary merge branch 2
     })
     if (!requestedSpot) {
         res.status(404);
