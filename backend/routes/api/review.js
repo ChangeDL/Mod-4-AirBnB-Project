@@ -6,6 +6,14 @@ const { check } = require('express-validator');
 const router = express.Router();
 
 
+router.get('/current', requireAuth, async (req, res) => {
+    const allReviewsByUser = await Review.findAll({
+        where: {
+            userId: req.user
+        }
+    })
+    res.json(allReviewsByUser)
+})
 
 
 
