@@ -24,6 +24,8 @@ router.use('/reviews', reviewRouter);
 
 router.use('/bookings', bookingRouter);
 
+router.use('/spot-images', spotImageRouter);
+
 router.post('/test', (req, res) => {
     res.json({ requestBody: req.body });
 });
