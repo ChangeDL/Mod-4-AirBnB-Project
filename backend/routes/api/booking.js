@@ -19,13 +19,20 @@ router.get('/current', requireAuth, async (req, res) => {
         ]
     })
     for (let i = 0; i < usersBookings.length; i++) {
-        const spotId = usersBookings[i].dataValues.spotId
-        const previewImage = await SpotImages.findOne({
-            where: { id: spotId },
-            attributes: ['url']
+        const spotIds = usersBookings[i].dataValues.id
+        const previewImageCheck = await SpotImages.findOne({
+            where: {
+                spotId: spotIds,
+            }
         })
-        usersBookings[i].dataValues.Spot.dataValues.previewImage = previewImage.url
+        if (!previewImageCheck) usersBookings[i].dataValues.Spot.dataValues.previewImage = 'No Preview Image Set For This Spot'
+        else if (previewImageCheck.preview === true) {
+            usersBookings[i].dataValues.Spot.dataValues.previewImage = previewImageCheck.url
+        } else {
+            usersBookings[i].dataValues.Spot.dataValues.previewImage = 'No Preview Image Set For This Spot'
+        }
     }
+
     Bookingsobj.Bookings = usersBookings
     res.json(Bookingsobj)
 })

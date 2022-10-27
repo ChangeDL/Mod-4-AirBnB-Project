@@ -40,7 +40,7 @@ module.exports = {
     });
     await queryInterface.addIndex(
       'Reviews',
-      ['userId', 'spotId', 'review'],
+      ['userId', 'spotId'],
       { unique: true }
     )
   },

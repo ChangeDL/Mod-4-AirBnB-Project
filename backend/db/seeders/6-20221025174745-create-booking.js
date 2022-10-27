@@ -38,8 +38,8 @@ module.exports = {
         endDate: '2025-11-25'
       },
       {
-        spotId: 5,
-        userId: 3,
+        spotId: 4,
+        userId: 1,
         startDate: '2025-9-24',
         endDate: '2025-9-25'
       },
