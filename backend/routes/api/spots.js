@@ -199,7 +199,7 @@ router.get('/:spotId', async (req, res) => {
             id: req.params.spotId
         },
         include: [{ model: SpotImages, as: 'SpotImages' },
-        { model: User, as: 'Owner' },
+        { model: User.scope("spotDetailsUser", "defaultScope"), as: 'Owner' },
         { model: Review, attributes: [] }],
         attributes: {
             include: [

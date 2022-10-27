@@ -100,6 +100,9 @@ module.exports = (sequelize, DataTypes) => {
         },
         loginUser: {
           attributes: {}
+        },
+        spotDetailsUser: {
+          attributes: { exclude: ['username'] }
         }
       }
     }
