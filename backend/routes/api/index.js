@@ -5,6 +5,7 @@ const usersRouter = require('./users.js');
 const spotsRouter = require('./spots.js');
 const reviewRouter = require('./review.js');
 const bookingRouter = require('./booking.js');
+const spotImageRouter = require('./spot-image.js');
 const { restoreUser } = require("../../utils/auth.js");
 const { requireAuth } = require('../../utils/auth.js');
 router.use(restoreUser);
