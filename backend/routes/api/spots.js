@@ -7,6 +7,7 @@ const { Op } = require('sequelize')
 const router = express.Router();
 
 router.get('/', async (req, res) => {
+    const spotsObj = {}
     const allSpots = await Spots.findAll({
         subQuery: false,
         include: [
@@ -24,11 +25,12 @@ router.get('/', async (req, res) => {
         },
         group: ['Spots.id', 'SpotImages.url']
     });
-    console.log(allSpots)
-    res.json(allSpots)
+    spotsObj.Spots = allSpots
+    res.json(spotsObj)
 })
 
 router.get('/current', requireAuth, async (req, res) => {
+    const spotsObj = {}
     const UserSpots = await Spots.findAll({
         where: {
             ownerId: req.user.id
@@ -49,7 +51,8 @@ router.get('/current', requireAuth, async (req, res) => {
         },
         group: ['Spots.id', 'SpotImages.url']
     })
-    res.json(UserSpots)
+    spotsObj.Spots = UserSpots
+    res.json(spotsObj)
 })
 
 router.post('/:spotId/images', requireAuth, async (req, res) => {
@@ -75,6 +78,7 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
 })
 
 router.get('/:spotId/reviews', async (req, res) => {
+    const reviewObj = {}
     const spotCheck = await Spots.findOne({ where: { id: req.params.spotId } })
     if (!spotCheck) {
         res.status(404);
@@ -89,15 +93,18 @@ router.get('/:spotId/reviews', async (req, res) => {
         },
         include: [
             {
-                model: User
+                model: User,
+                attributes: ['id', 'firstName', 'lastName']
             },
             {
-                model: ReviewImages
+                model: ReviewImages,
+                attributes: ['id', 'url']
             }
         ],
 
     })
-    res.json(reviewsForSpot)
+    reviewObj.Reviews = reviewsForSpot
+    res.json(reviewObj)
 })
 
 router.post('/:spotId/reviews', requireAuth, async (req, res) => {
@@ -176,7 +183,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
         // console.log('***********testing: ', checkIfAlreadyBooked)
 
         const bookingForSpot = await Booking.create({
-            spotId: req.params.spotId,
+            spotId: +req.params.spotId,
             userId: req.user.id,
             startDate,
             endDate,

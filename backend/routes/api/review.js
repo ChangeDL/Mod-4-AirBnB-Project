@@ -8,12 +8,19 @@ const router = express.Router();
 
 
 router.get('/current', requireAuth, async (req, res) => {
+    const reviewObj = {}
     const allReviewsByUser = await Review.findAll({
+        include: [
+            { model: User, attributes: ['id', 'firstName', 'lastName'] },
+            { model: Spots },
+            { model: ReviewImages, attributes: ['id', 'url'] }
+        ],
         where: {
             userId: req.user.id
         }
     })
-    res.json(allReviewsByUser)
+    reviewObj.Reviews = allReviewsByUser
+    res.json(reviewObj)
 })
 
 router.post('/:reviewId/images', requireAuth, async (req, res) => {
