@@ -48,7 +48,7 @@ module.exports = {
     await queryInterface.dropTable('Reviews');
     await queryInterface.removeIndex(
       'Reviews',
-      ['userId', 'spotId', 'review'],
+      ['userId', 'spotId'],
       { unique: true }
     )
   }

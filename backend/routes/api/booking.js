@@ -7,13 +7,27 @@ const { check } = require('express-validator');
 const router = express.Router();
 
 router.get('/current', requireAuth, async (req, res) => {
+    const Bookingsobj = {}
     const usersBookings = await Booking.findAll({
         where: { userId: req.user.id },
         include: [
-            { model: Spots }
+            {
+                model: Spots,
+                attributes: ['id', 'ownerId', 'address', 'city', 'country', 'lat', 'lng', 'name', 'price']
+            },
+
         ]
     })
-    res.json(usersBookings)
+    for (let i = 0; i < usersBookings.length; i++) {
+        const spotId = usersBookings[i].dataValues.spotId
+        const previewImage = await SpotImages.findOne({
+            where: { id: spotId },
+            attributes: ['url']
+        })
+        usersBookings[i].dataValues.Spot.dataValues.previewImage = previewImage.url
+    }
+    Bookingsobj.Bookings = usersBookings
+    res.json(Bookingsobj)
 })
 
 router.put('/:bookingId', requireAuth, async (req, res) => {
