@@ -129,6 +129,7 @@ router.post('/:spotId/reviews', requireAuth, async (req, res) => {
 })
 
 router.get('/:spotId/bookings', requireAuth, async (req, res) => {
+    const bookingsObj = {}
     const currentSpot = await Spots.findOne({
         where: { id: req.params.spotId }
     })
@@ -145,7 +146,8 @@ router.get('/:spotId/bookings', requireAuth, async (req, res) => {
         const bookingsForSpot = await Booking.findAll({
             where: { spotId: req.params.spotId }
         })
-        res.json(bookingsForSpot)
+        bookingsObj.Bookings = bookingsForSpot
+        res.json(bookingsObj)
     }
     if (req.user.id === currentSpot.ownerId) {
         const bookingsForSpot = await Booking.findAll({
@@ -154,7 +156,8 @@ router.get('/:spotId/bookings', requireAuth, async (req, res) => {
                 { model: User, attributes: ['id', 'firstName', 'lastName'] }
             ]
         })
-        res.json(bookingsForSpot)
+        bookingsObj.Bookings = bookingsForSpot
+        res.json(bookingsObj)
     }
 })
 
@@ -173,14 +176,6 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
 
     if (req.user.id !== currentSpot.ownerId) {
         const { startDate, endDate } = req.body
-        // const checkIfAlreadyBooked = await Booking.findAll({
-        //     where: {
-        //         spotId: req.params.spotId,
-        //         startDate
-        //     },
-
-        // })
-        // console.log('***********testing: ', checkIfAlreadyBooked)
 
         const bookingForSpot = await Booking.create({
             spotId: +req.params.spotId,
