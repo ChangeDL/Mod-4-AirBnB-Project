@@ -7,11 +7,24 @@ const { Op } = require('sequelize')
 const router = express.Router();
 
 router.get('/', async (req, res) => {
+    let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query
+
+    if (!+page || +page > 10 || !Number.isInteger(+page)) page = 1
+    if (!+size || +size > 20 || !Number.isInteger(+size)) size = 20
+    // if (minLat) {
+    //     if (minLat % 1 === 0) {
+    //         res.status(400)
+    //         return res.json{ message:}
+    //     }
+    // }
+    let limit = +size
+    let offset = +size * (+page - 1)
+
+
     const spotsObj = {}
     const allSpots = await Spots.findAll({
         subQuery: false,
         include: [
-            { model: SpotImages, attributes: [] },
             { model: Review, attributes: [] }
         ],
         attributes: {
@@ -20,24 +33,42 @@ router.get('/', async (req, res) => {
                     sequelize.fn('AVG', sequelize.col('Reviews.stars')),
                     'avgRating'
                 ],
-                [sequelize.col('SpotImages.url'), 'previewImage']
             ]
         },
-        group: ['Spots.id', 'SpotImages.url']
+        group: ['Spots.id'],
+        limit,
+        offset,
     });
+
+    for (let i = 0; i < allSpots.length; i++) {
+        const spotIds = allSpots[i].dataValues.id
+        const previewImageCheck = await SpotImages.findOne({
+            where: {
+                spotId: spotIds,
+            }
+        })
+        if (!previewImageCheck) allSpots[i].dataValues.previewImage = 'No Preview Image Set For This Spot'
+        else if (previewImageCheck.preview === true) {
+            allSpots[i].dataValues.previewImage = previewImageCheck.url
+        } else {
+            allSpots[i].dataValues.previewImage = 'No Preview Image Set For This Spot'
+        }
+    }
+
     spotsObj.Spots = allSpots
+    spotsObj.page = +page
+    spotsObj.size = +size
     res.json(spotsObj)
 })
 
 router.get('/current', requireAuth, async (req, res) => {
     const spotsObj = {}
-    const UserSpots = await Spots.findAll({
+    const userSpots = await Spots.findAll({
         where: {
             ownerId: req.user.id
         },
 
         include: [
-            { model: SpotImages, attributes: [] },
             { model: Review, attributes: [] }
         ],
         attributes: {
@@ -46,12 +77,26 @@ router.get('/current', requireAuth, async (req, res) => {
                     sequelize.fn('AVG', sequelize.col('Reviews.stars')),
                     'avgRating'
                 ],
-                [sequelize.col('SpotImages.url'), 'previewImage']
             ]
         },
-        group: ['Spots.id', 'SpotImages.url']
+        group: ['Spots.id']
     })
-    spotsObj.Spots = UserSpots
+
+    for (let i = 0; i < userSpots.length; i++) {
+        const spotIds = userSpots[i].dataValues.id
+        const previewImageCheck = await SpotImages.findOne({
+            where: {
+                spotId: spotIds,
+            }
+        })
+        if (!previewImageCheck) userSpots[i].dataValues.previewImage = 'No Preview Image Set For This Spot'
+        else if (previewImageCheck.preview === true) {
+            userSpots[i].dataValues.previewImage = previewImageCheck.url
+        } else {
+            userSpots[i].dataValues.previewImage = 'No Preview Image Set For This Spot'
+        }
+    }
+    spotsObj.Spots = userSpots
     res.json(spotsObj)
 })
 
@@ -129,6 +174,7 @@ router.post('/:spotId/reviews', requireAuth, async (req, res) => {
 })
 
 router.get('/:spotId/bookings', requireAuth, async (req, res) => {
+    const bookingsObj = {}
     const currentSpot = await Spots.findOne({
         where: { id: req.params.spotId }
     })
@@ -145,7 +191,8 @@ router.get('/:spotId/bookings', requireAuth, async (req, res) => {
         const bookingsForSpot = await Booking.findAll({
             where: { spotId: req.params.spotId }
         })
-        res.json(bookingsForSpot)
+        bookingsObj.Bookings = bookingsForSpot
+        res.json(bookingsObj)
     }
     if (req.user.id === currentSpot.ownerId) {
         const bookingsForSpot = await Booking.findAll({
@@ -154,7 +201,8 @@ router.get('/:spotId/bookings', requireAuth, async (req, res) => {
                 { model: User, attributes: ['id', 'firstName', 'lastName'] }
             ]
         })
-        res.json(bookingsForSpot)
+        bookingsObj.Bookings = bookingsForSpot
+        res.json(bookingsObj)
     }
 })
 
@@ -173,14 +221,6 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
 
     if (req.user.id !== currentSpot.ownerId) {
         const { startDate, endDate } = req.body
-        // const checkIfAlreadyBooked = await Booking.findAll({
-        //     where: {
-        //         spotId: req.params.spotId,
-        //         startDate
-        //     },
-
-        // })
-        // console.log('***********testing: ', checkIfAlreadyBooked)
 
         const bookingForSpot = await Booking.create({
             spotId: +req.params.spotId,
