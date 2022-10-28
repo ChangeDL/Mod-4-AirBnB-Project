@@ -2,9 +2,12 @@ const express = require('express')
 const { requireAuth } = require('../../utils/auth');
 const { Spots, SpotImages, Review, ReviewImages, User, Booking, sequelize } = require('../../db/models');
 const { check } = require('express-validator');
+const { handleValidationErrors } = require('../../utils/validation');
 const { Op } = require('sequelize')
 
 const router = express.Router();
+
+
 
 router.get('/', async (req, res) => {
     let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query
@@ -164,6 +167,23 @@ router.post('/:spotId/reviews', requireAuth, async (req, res) => {
             statusCode: 404
         })
     }
+
+    const checkIfUserLeftReviewAlready = await Review.findOne({
+        where: {
+            userId: req.user.id,
+            spotId: req.params.spotId
+        }
+    })
+
+    if (checkIfUserLeftReviewAlready) {
+        res.status(403);
+        return res.json({
+            message: "User already has a review for this spot",
+            statusCode: 403
+        })
+    }
+
+
     const newReview = await Review.create({
         userId: req.user.id,
         spotId: req.params.spotId,
@@ -207,6 +227,7 @@ router.get('/:spotId/bookings', requireAuth, async (req, res) => {
 })
 
 router.post('/:spotId/bookings', requireAuth, async (req, res) => {
+    const { startDate, endDate } = req.body
     const currentSpot = await Spots.findOne({
         where: { id: req.params.spotId }
     })
@@ -219,8 +240,62 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
         })
     }
 
+    const formatStartDate = new Date(startDate)
+    const formatEndDate = new Date(endDate)
+
+
     if (req.user.id !== currentSpot.ownerId) {
-        const { startDate, endDate } = req.body
+        const findIfTimeHasAlreadyBeenBookedForSpot = await Booking.findAll({
+            where: { spotId: req.params.spotId }
+        })
+
+        for (let i = 0; i < findIfTimeHasAlreadyBeenBookedForSpot.length; i++) {
+            const startDatesForBookings = (findIfTimeHasAlreadyBeenBookedForSpot[i].startDate)
+            const endDatesForBookings = (findIfTimeHasAlreadyBeenBookedForSpot[i].endDate)
+            if (startDatesForBookings.toDateString() === formatStartDate.toDateString() && endDatesForBookings.toDateString() === formatEndDate.toDateString()) {
+                res.status(403);
+                return res.json({
+                    message: "Sorry, this spot is already booked for the specified dates",
+                    statusCode: 403,
+                    errors: {
+                        startDate: "Start date conflicts with an existing booking",
+                        endDate: "Start date conflicts with an existing booking"
+                    }
+                })
+            }
+        }
+
+
+        for (let i = 0; i < findIfTimeHasAlreadyBeenBookedForSpot.length; i++) {
+            const startDatesForBookings = (findIfTimeHasAlreadyBeenBookedForSpot[i].startDate)
+            if (startDatesForBookings.toDateString() === formatStartDate.toDateString()) {
+                res.status(403);
+                return res.json({
+                    message: "Sorry, this spot is already booked for the specified dates",
+                    statusCode: 403,
+                    errors: {
+                        startDate: "Start date conflicts with an existing booking"
+                    }
+                })
+            }
+
+
+        }
+        for (let i = 0; i < findIfTimeHasAlreadyBeenBookedForSpot.length; i++) {
+            const endDatesForBookings = (findIfTimeHasAlreadyBeenBookedForSpot[i].endDate)
+            if (endDatesForBookings.toDateString() === formatEndDate.toDateString()) {
+                res.status(403);
+                return res.json({
+                    message: "Sorry, this spot is already booked for the specified dates",
+                    statusCode: 403,
+                    errors: {
+                        endDate: "Start date conflicts with an existing booking"
+                    }
+                })
+            }
+
+
+        }
 
         const bookingForSpot = await Booking.create({
             spotId: +req.params.spotId,
