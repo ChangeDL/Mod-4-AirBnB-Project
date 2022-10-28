@@ -20,6 +20,12 @@ router.get('/current', requireAuth, async (req, res) => {
     })
     for (let i = 0; i < usersBookings.length; i++) {
         const spotIds = usersBookings[i].dataValues.id
+
+        usersBookings[i].Spot.dataValues.lat = +usersBookings[i].Spot.dataValues.lat
+        usersBookings[i].Spot.dataValues.lng = +usersBookings[i].Spot.dataValues.lng
+        usersBookings[i].Spot.dataValues.price = +usersBookings[i].Spot.dataValues.price
+
+
         const previewImageCheck = await SpotImages.findOne({
             where: {
                 spotId: spotIds,
