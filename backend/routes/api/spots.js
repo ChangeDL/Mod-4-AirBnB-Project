@@ -364,21 +364,19 @@ router.get('/:spotId', async (req, res) => {
 });
 
 router.post('/', requireAuth, async (req, res) => {
-    let { address, city, state, country, lat, lng, name, description, price } = req.body
-    lat = +lat
-    lng = +lng
-    price = +price
+    const { address, city, state, country, lat, lng, name, description, price } = req.body
+
     const newSpot = await Spots.create({
         ownerId: req.user.id,
         address,
         city,
         state,
         country,
-        lat,
-        lng,
+        lat: +lat,
+        lng: +lng,
         name,
         description,
-        price
+        price: +price
     })
     res.json(newSpot)
 })
