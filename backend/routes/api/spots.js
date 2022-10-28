@@ -12,8 +12,8 @@ const router = express.Router();
 router.get('/', async (req, res) => {
     let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query
 
-    if (!+page || +page > 10 || !Number.isInteger(+page)) page = 1
-    if (!+size || +size > 20 || !Number.isInteger(+size)) size = 20
+    if (!page || +page > 10 || !Number.isInteger(+page)) page = 1
+    if (!size || +size > 20 || !Number.isInteger(+size)) size = 20
     // if (minLat) {
     //     if (minLat % 1 === 0) {
     //         res.status(400)
@@ -267,7 +267,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
                     statusCode: 403,
                     errors: {
                         startDate: "Start date conflicts with an existing booking",
-                        endDate: "Start date conflicts with an existing booking"
+                        endDate: "End date conflicts with an existing booking"
                     }
                 })
             }
@@ -297,7 +297,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
                     message: "Sorry, this spot is already booked for the specified dates",
                     statusCode: 403,
                     errors: {
-                        endDate: "Start date conflicts with an existing booking"
+                        endDate: "End date conflicts with an existing booking"
                     }
                 })
             }
