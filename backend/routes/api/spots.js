@@ -118,7 +118,7 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
         })
     }
     const imageForSpot = await SpotImages.create({
-        spotId: req.params.spotId,
+        spotId: +req.params.spotId,
         url,
         preview
     })
@@ -186,7 +186,7 @@ router.post('/:spotId/reviews', requireAuth, async (req, res) => {
 
     const newReview = await Review.create({
         userId: req.user.id,
-        spotId: req.params.spotId,
+        spotId: +req.params.spotId,
         review,
         stars
     })
@@ -326,6 +326,10 @@ router.get('/:spotId', async (req, res) => {
         attributes: {
             include: [
                 [
+                    sequelize.fn('ROUND', sequelize.fn('COUNT', sequelize.col('Reviews.id')), 2),
+                    'numReviews'
+                ],
+                [
                     sequelize.fn('AVG', sequelize.col('Reviews.stars')),
                     'avgRating'
                 ]
@@ -368,7 +372,8 @@ router.put('/:spotId', requireAuth, async (req, res) => {
     const requestedSpot = await Spots.scope('updateSpot').findOne({
         where: {
             id: req.params.spotId
-        }
+        },
+        attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'description', 'price', 'createdAt', 'updatedAt']
     })
     if (!requestedSpot) {
         res.status(404);

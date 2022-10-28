@@ -13,13 +13,29 @@ router.get('/current', requireAuth, async (req, res) => {
     const allReviewsByUser = await Review.findAll({
         include: [
             { model: User, attributes: ['id', 'firstName', 'lastName'] },
-            { model: Spots },
+            { model: Spots, attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'description', 'price'] },
             { model: ReviewImages, attributes: ['id', 'url'] }
         ],
         where: {
             userId: req.user.id
         }
     })
+
+    for (let i = 0; i < allReviewsByUser.length; i++) {
+        const spotIds = (allReviewsByUser[i].spotId)
+        const previewImageCheck = await SpotImages.findOne({
+            where: {
+                spotId: spotIds,
+            }
+        })
+
+        if (!previewImageCheck) allReviewsByUser[i].Spot.dataValues.previewImage = 'No Preview Image Set For This Spot'
+        else if (previewImageCheck.preview === true) {
+            allReviewsByUser[i].Spot.dataValues.previewImage = previewImageCheck.url
+        } else {
+            allReviewsByUser[i].Spot.dataValues.previewImage = 'No Preview Image Set For This Spot'
+        }
+    }
     reviewObj.Reviews = allReviewsByUser
     res.json(reviewObj)
 })
