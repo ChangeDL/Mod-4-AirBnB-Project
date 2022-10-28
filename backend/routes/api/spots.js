@@ -45,6 +45,11 @@ router.get('/', async (req, res) => {
 
     for (let i = 0; i < allSpots.length; i++) {
         const spotIds = allSpots[i].dataValues.id
+        allSpots[i].dataValues.lat = +allSpots[i].dataValues.lat
+        allSpots[i].dataValues.lng = +allSpots[i].dataValues.lng
+        allSpots[i].dataValues.price = +allSpots[i].dataValues.price
+        allSpots[i].dataValues.avgRating = +allSpots[i].dataValues.avgRating
+
         const previewImageCheck = await SpotImages.findOne({
             where: {
                 spotId: spotIds,
@@ -57,7 +62,6 @@ router.get('/', async (req, res) => {
             allSpots[i].dataValues.previewImage = 'No Preview Image Set For This Spot'
         }
     }
-
     spotsObj.Spots = allSpots
     spotsObj.page = +page
     spotsObj.size = +size
@@ -87,6 +91,10 @@ router.get('/current', requireAuth, async (req, res) => {
 
     for (let i = 0; i < userSpots.length; i++) {
         const spotIds = userSpots[i].dataValues.id
+        userSpots[i].dataValues.lat = +userSpots[i].dataValues.lat
+        userSpots[i].dataValues.lng = +userSpots[i].dataValues.lng
+        userSpots[i].dataValues.price = +userSpots[i].dataValues.price
+        userSpots[i].dataValues.avgRating = +userSpots[i].dataValues.avgRating
         const previewImageCheck = await SpotImages.findOne({
             where: {
                 spotId: spotIds,
@@ -339,6 +347,7 @@ router.get('/:spotId', async (req, res) => {
         group: ['Spots.id', 'SpotImages.id', 'Owner.id'],
 
     })
+
     if (!requestedSpot) {
         res.status(404);
         return res.json({
@@ -346,11 +355,19 @@ router.get('/:spotId', async (req, res) => {
             statusCode: 404
         })
     }
+    requestedSpot.dataValues.lat = +requestedSpot.dataValues.lat
+    requestedSpot.dataValues.lng = +requestedSpot.dataValues.lng
+    requestedSpot.dataValues.price = +requestedSpot.dataValues.price
+    requestedSpot.dataValues.numReviews = +requestedSpot.dataValues.numReviews
+    requestedSpot.dataValues.avgRating = +requestedSpot.dataValues.avgRating
     res.json(requestedSpot)
 });
 
 router.post('/', requireAuth, async (req, res) => {
-    const { address, city, state, country, lat, lng, name, description, price } = req.body
+    let { address, city, state, country, lat, lng, name, description, price } = req.body
+    lat = +lat
+    lng = +lng
+    price = +price
     const newSpot = await Spots.create({
         ownerId: req.user.id,
         address,
