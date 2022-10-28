@@ -33,7 +33,7 @@ router.get('/', async (req, res) => {
         attributes: {
             include: [
                 [
-                    sequelize.fn('AVG', sequelize.col('Reviews.stars')),
+                    sequelize.fn('ROUND', sequelize.fn('AVG', sequelize.col('Reviews.stars')), 1),
                     'avgRating'
                 ],
             ]
@@ -77,7 +77,7 @@ router.get('/current', requireAuth, async (req, res) => {
         attributes: {
             include: [
                 [
-                    sequelize.fn('AVG', sequelize.col('Reviews.stars')),
+                    sequelize.fn('ROUND', sequelize.fn('AVG', sequelize.col('Reviews.stars')), 1),
                     'avgRating'
                 ],
             ]
@@ -326,11 +326,11 @@ router.get('/:spotId', async (req, res) => {
         attributes: {
             include: [
                 [
-                    sequelize.fn('ROUND', sequelize.fn('COUNT', sequelize.col('Reviews.id')), 2),
+                    sequelize.fn('COUNT', sequelize.col('Reviews.id')),
                     'numReviews'
                 ],
                 [
-                    sequelize.fn('AVG', sequelize.col('Reviews.stars')),
+                    sequelize.fn('ROUND', sequelize.fn('AVG', sequelize.col('Reviews.stars')), 1),
                     'avgRating'
                 ]
             ]
