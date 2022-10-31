@@ -75,6 +75,14 @@ router.put('/:reviewId', requireAuth, async (req, res) => {
             statusCode: 404
         })
     }
+
+    if (reviewToEdit.userId !== req.user.id) {
+        res.status(401);
+        return res.json({
+            message: "You're not the User who created this review.",
+            statusCode: 401
+        })
+    }
     reviewToEdit.update({
 
         review,
@@ -90,6 +98,14 @@ router.delete('/:reviewId', requireAuth, async (req, res) => {
         return res.json({
             message: "Review couldn't be found",
             statusCode: 404
+        })
+    }
+
+    if (reviewToDelete.userId !== req.user.id) {
+        res.status(401);
+        return res.json({
+            message: "You're not the user who created this review",
+            statusCode: 401
         })
     }
     reviewToDelete.destroy();

@@ -165,6 +165,7 @@ router.get('/:spotId/reviews', async (req, res) => {
 
 router.post('/:spotId/reviews', requireAuth, async (req, res) => {
     const { review, stars } = req.body
+    const errorObj = {}
     const requestedSpot = await Spots.findOne({
         where: { id: req.params.spotId }
     })
@@ -191,7 +192,21 @@ router.post('/:spotId/reviews', requireAuth, async (req, res) => {
         })
     }
 
+    if (!review) {
+        errorObj.review = "Review text is required"
+    }
+    if (stars < 1 || stars > 5 || !stars) {
+        errorObj.stars = "Stars must be an integer from 1 to 5"
+    }
 
+    if (Object.keys(errorObj).length > 0) {
+        res.status(400)
+        return res.json({
+            message: "Validation error",
+            statusCode: 400,
+            errors: errorObj
+        })
+    }
     const newReview = await Review.create({
         userId: req.user.id,
         spotId: +req.params.spotId,
@@ -397,6 +412,14 @@ router.put('/:spotId', requireAuth, async (req, res) => {
             statusCode: 404
         })
     }
+
+    if (requestedSpot.ownerId !== req.user.id) {
+        res.status(401);
+        return res.json({
+            message: "You're not the owner of this spot.",
+            statusCode: 401
+        })
+    }
     await requestedSpot.update({
         address,
         city,
@@ -422,6 +445,14 @@ router.delete('/:spotId', requireAuth, async (req, res) => {
         return res.json({
             message: "Spot couldn't be found",
             statusCode: 404
+        })
+    }
+
+    if (requestedSpot.ownerId !== req.user.id) {
+        res.status(401);
+        return res.json({
+            message: "You're not the owner of this spot",
+            statusCode: 401
         })
     }
     requestedSpot.destroy();
