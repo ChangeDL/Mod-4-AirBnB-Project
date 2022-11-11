@@ -12,14 +12,32 @@ const router = express.Router();
 router.get('/', async (req, res) => {
     let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query
 
+    const errorObj = {}
+
+    if (page.length < 1) errorObj.page = 'Page must be greater than or equal to 1'
+    if (size.length < 1) errorObj.size = 'Size must be greater than or equal to 1'
+    if (maxLat % 1 !== 0) errorObj.maxLat = 'Maximum latitude is invalid'
+    if (minLat % 1 !== 0) errorObj.minLat = 'Minimum latitude is invalid'
+    if (maxLng % 1 !== 0) errorObj.maxLng = 'Maximum longitude is invalid'
+    if (minLng % 1 !== 0) errorObj.minLng = 'Minimum longitude is invalid'
+    if (minPrice < 0) errorObj.minPrice = 'Minimum price must be greater than or equal to 0'
+    if (maxPrice < 0) errorObj.maxPrice = 'Maximum price must be greater than or equal to 0'
+
+
+    if (Object.keys(errorObj).length > 0) {
+        res.status(400)
+        return res.json({
+            message: "Validation error",
+            statusCode: 400,
+            errors: errorObj
+        })
+    }
+
     if (!page || +page > 10 || !Number.isInteger(+page)) page = 1
     if (!size || +size > 20 || !Number.isInteger(+size)) size = 20
-    // if (minLat) {
-    //     if (minLat % 1 === 0) {
-    //         res.status(400)
-    //         return res.json{ message:}
-    //     }
-    // }
+
+
+
     let limit = +size
     let offset = +size * (+page - 1)
 
@@ -192,12 +210,9 @@ router.post('/:spotId/reviews', requireAuth, async (req, res) => {
         })
     }
 
-    if (!review) {
-        errorObj.review = "Review text is required"
-    }
-    if (stars < 1 || stars > 5 || !stars) {
-        errorObj.stars = "Stars must be an integer from 1 to 5"
-    }
+    if (!review) errorObj.review = "Review text is required"
+
+    if (stars < 1 || stars > 5 || !stars) errorObj.stars = "Stars must be an integer from 1 to 5"
 
     if (Object.keys(errorObj).length > 0) {
         res.status(400)
@@ -272,54 +287,33 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
             where: { spotId: req.params.spotId }
         })
 
-        for (let i = 0; i < findIfTimeHasAlreadyBeenBookedForSpot.length; i++) {
-            const startDatesForBookings = (findIfTimeHasAlreadyBeenBookedForSpot[i].startDate)
-            const endDatesForBookings = (findIfTimeHasAlreadyBeenBookedForSpot[i].endDate)
-            if (startDatesForBookings.toDateString() === formatStartDate.toDateString() && endDatesForBookings.toDateString() === formatEndDate.toDateString()) {
-                res.status(403);
-                return res.json({
-                    message: "Sorry, this spot is already booked for the specified dates",
-                    statusCode: 403,
-                    errors: {
-                        startDate: "Start date conflicts with an existing booking",
-                        endDate: "End date conflicts with an existing booking"
-                    }
-                })
-            }
-        }
-
+        const errorObj = {}
 
         for (let i = 0; i < findIfTimeHasAlreadyBeenBookedForSpot.length; i++) {
             const startDatesForBookings = (findIfTimeHasAlreadyBeenBookedForSpot[i].startDate)
-            if (startDatesForBookings.toDateString() === formatStartDate.toDateString()) {
-                res.status(403);
-                return res.json({
-                    message: "Sorry, this spot is already booked for the specified dates",
-                    statusCode: 403,
-                    errors: {
-                        startDate: "Start date conflicts with an existing booking"
-                    }
-                })
-            }
-
-
-        }
-        for (let i = 0; i < findIfTimeHasAlreadyBeenBookedForSpot.length; i++) {
             const endDatesForBookings = (findIfTimeHasAlreadyBeenBookedForSpot[i].endDate)
-            if (endDatesForBookings.toDateString() === formatEndDate.toDateString()) {
-                res.status(403);
-                return res.json({
-                    message: "Sorry, this spot is already booked for the specified dates",
-                    statusCode: 403,
-                    errors: {
-                        endDate: "End date conflicts with an existing booking"
-                    }
-                })
-            }
-
-
+            if (startDatesForBookings.toDateString() === formatStartDate.toDateString()) errorObj.startDate = "Start date conflicts with an existing booking"
+            if (endDatesForBookings.toDateString() === formatEndDate.toDateString()) errorObj.endDate = "End date conflicts with an existing booking"
         }
 
+        if (Object.keys(errorObj).length > 0) {
+            res.status(403);
+            return res.json({
+                message: "Sorry, this spot is already booked for the specified dates",
+                statusCode: 403,
+                errors: errorObj
+            })
+        }
+
+
+
+        if ((startDate >= endDate) === true) {
+            res.status(403);
+            return res.json({
+                message: "End Date cannot be on or before Start Date",
+                statusCode: 403
+            })
+        }
         const bookingForSpot = await Booking.create({
             spotId: +req.params.spotId,
             userId: req.user.id,
@@ -380,6 +374,25 @@ router.get('/:spotId', async (req, res) => {
 
 router.post('/', requireAuth, async (req, res) => {
     const { address, city, state, country, lat, lng, name, description, price } = req.body
+    const errorObj = {}
+
+    if (!address) errorObj.address = "Street address is required"
+    if (!city) errorObj.city = "City is required"
+    if (!state) errorObj.state = "State is required"
+    if (!lat || (+lat % 1 === 0)) errorObj.lat = "Latitude is not valid"
+    if (!lng || (+lng % 1 === 0)) errorObj.lng = "Longitude is not valid"
+    if (!name || name.length > 50) errorObj.name = "Name must be more then 1 character and less than 50 characters"
+    if (!description) errorObj.description = "Description is required"
+    if (!price) errorObj.price = "Price per day is required"
+
+    if (Object.keys(errorObj).length > 0) {
+        res.status(400)
+        return res.json({
+            message: "Validation Error",
+            statusCode: 400,
+            errors: errorObj
+        })
+    }
 
     const newSpot = await Spots.create({
         ownerId: req.user.id,
@@ -399,6 +412,25 @@ router.post('/', requireAuth, async (req, res) => {
 
 router.put('/:spotId', requireAuth, async (req, res) => {
     const { address, city, state, country, lat, lng, name, description, price } = req.body
+    const errorObj = {}
+
+    if (!address) errorObj.address = "Street address is required"
+    if (!city) errorObj.city = "City is required"
+    if (!state) errorObj.state = "State is required"
+    if (!lat || (+lat % 1 === 0)) errorObj.lat = "Latitude is not valid"
+    if (!lng || (+lng % 1 === 0)) errorObj.lng = "Longitude is not valid"
+    if (!name || name.length > 50) errorObj.name = "Name must be more then 1 character and less than 50 characters"
+    if (!description) errorObj.description = "Description is required"
+    if (!price) errorObj.price = "Price per day is required"
+
+    if (Object.keys(errorObj).length > 0) {
+        res.status(400)
+        return res.json({
+            message: "Validation Error",
+            statusCode: 400,
+            errors: errorObj
+        })
+    }
     const requestedSpot = await Spots.scope('updateSpot').findOne({
         where: {
             id: req.params.spotId

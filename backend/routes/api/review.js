@@ -57,6 +57,18 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
             statusCode: 404
         })
     }
+
+    const imageOnReviewLimitCheck = await SpotImages.findAll({
+        where: { reviewId: req.params.reviewId }
+    })
+    if (imageOnReviewLimitCheck.length === 10) {
+        res.status(403)
+        return res.json({
+            message: "Maximum number of images for this resource was reached",
+            statusCode: 403
+        })
+    }
+
     const newImageForReview = await ReviewImages.create({
         reviewId: req.params.reviewId,
         url
@@ -73,6 +85,19 @@ router.put('/:reviewId', requireAuth, async (req, res) => {
         return res.json({
             message: "Review couldn't be found",
             statusCode: 404
+        })
+    }
+
+    if (!review) errorObj.review = "Review text is required"
+
+    if (stars < 1 || stars > 5 || !stars) errorObj.stars = "Stars must be an integer from 1 to 5"
+
+    if (Object.keys(errorObj).length > 0) {
+        res.status(400)
+        return res.json({
+            message: "Validation error",
+            statusCode: 400,
+            errors: errorObj
         })
     }
 
