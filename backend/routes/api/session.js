@@ -22,6 +22,7 @@ router.post(
     '/',
     validateLogin,
     async (req, res, next) => {
+        const userObj = {}
         const { credential, password } = req.body;
         const errorObj = {}
 
@@ -49,8 +50,9 @@ router.post(
 
         const token = await setTokenCookie(res, user);
         user.dataValues.token = token
+        userObj.user = user
         return res.json(
-            user
+            userObj
         );
     }
 );

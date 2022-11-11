@@ -38,6 +38,7 @@ router.post(
     '/',
     validateSignup,
     async (req, res) => {
+        const userObj = {}
         const { email, password, username, firstName, lastName } = req.body;
         const errorObj = {}
 
@@ -76,9 +77,10 @@ router.post(
 
         const token = await setTokenCookie(res, user);
         user.dataValues.token = token
+        userObj.user = user
 
         return res.json(
-            user
+            userObj
         );
     }
 );

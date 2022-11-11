@@ -11,7 +11,7 @@ function LoginFormPage() {
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState([]);
 
-    if (sessionUser) return (
+    if (Object.values(sessionUser).length > 0) return (
         <Redirect to="/" />
     );
 
