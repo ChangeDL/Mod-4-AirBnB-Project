@@ -16,10 +16,10 @@ router.get('/', async (req, res) => {
 
     if (page.length < 1) errorObj.page = 'Page must be greater than or equal to 1'
     if (size.length < 1) errorObj.size = 'Size must be greater than or equal to 1'
-    if (maxLat % 1 === 0) errorObj.maxLat = 'Maximum latitude is invalid'
-    if (minLat % 1 === 0) errorObj.minLat = 'Minimum latitude is invalid'
-    if (maxLng % 1 === 0) errorObj.maxLng = 'Maximum longitude is invalid'
-    if (minLng % 1 === 0) errorObj.minLng = 'Minimum longitude is invalid'
+    if (maxLat % 1 === 0 || isNaN(maxLat)) errorObj.maxLat = 'Maximum latitude is invalid'
+    if (minLat % 1 === 0 || isNaN(minLat)) errorObj.minLat = 'Minimum latitude is invalid'
+    if (maxLng % 1 === 0 || isNaN(maxLng)) errorObj.maxLng = 'Maximum longitude is invalid'
+    if (minLng % 1 === 0 || isNaN(minLng)) errorObj.minLng = 'Minimum longitude is invalid'
     if (minPrice < 0) errorObj.minPrice = 'Minimum price must be greater than or equal to 0'
     if (maxPrice < 0) errorObj.maxPrice = 'Maximum price must be greater than or equal to 0'
 
