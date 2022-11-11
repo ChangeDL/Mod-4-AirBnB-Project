@@ -39,12 +39,35 @@ router.post(
     validateSignup,
     async (req, res) => {
         const { email, password, username, firstName, lastName } = req.body;
+        const errorObj = {}
+
+        if (!email) errorObj.email = 'Invalid email'
+        if (!username) errorObj.username = 'Username is required'
+        if (!lastName) errorObj.lastName = 'Last Name is required'
+        if (!lastName) errorObj.lastName = 'First Name is required'
+
+        if (Object.keys(errorObj).length > 0) {
+            res.status(400)
+            return res.json({
+                message: "Validation error",
+                statusCode: 400,
+                errors: errorObj
+            })
+        }
 
         const checkIfEmailAlreadyExist = await User.findOne({ where: { email: email } })
         if (checkIfEmailAlreadyExist) {
             res.status(403);
             return res.json({
                 message: "Account with this email already exist, please use a different one",
+                statusCode: 403
+            })
+        }
+        const checkIfUserNameExist = await User.findOne({ where: { username: username } })
+        if (checkIfUserNameExist) {
+            res.status(403);
+            return res.json({
+                message: "Account with this username already exist, please use a different one",
                 statusCode: 403
             })
         }
