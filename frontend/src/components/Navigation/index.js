@@ -1,35 +1,70 @@
 // frontend/src/components/Navigation/index.js
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+
+import { useSelector, useDispatch } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import LoginFormModal from '../LoginFormModal';
 import './Navigation.css';
 
 function Navigation({ isLoaded }) {
+    const dispatch = useDispatch();
+    const [showMenu, setShowMenu] = useState(false);
+
+    const openMenu = () => {
+        if (showMenu) return;
+        setShowMenu(true);
+    };
+
+    useEffect(() => {
+        if (!showMenu) return;
+
+        const closeMenu = () => {
+            setShowMenu(false);
+        };
+
+        document.addEventListener('click', closeMenu);
+
+        return () => document.removeEventListener("click", closeMenu);
+    }, [showMenu]);
+
     const sessionUser = useSelector(state => state.session.user);
 
     let sessionLinks;
     if (sessionUser) {
         sessionLinks = (
-            <ProfileButton user={sessionUser} />
+            <>
+                <ProfileButton user={sessionUser} className='ProfileButton' />
+
+            </>
         );
     } else {
         sessionLinks = (
             <>
-                <LoginFormModal />
-                <NavLink to="/signup">Sign Up</NavLink>
+                <button onClick={openMenu} className="profileButton">
+                    <i className="fas fa-user-circle" />
+                </button>
+                {showMenu && (
+                    <ul className="profile-dropdown">
+                        <li><NavLink to="/login" className="loginbutton">Log In</NavLink></li>
+                        <li> <NavLink to="/signup" className="signUpButton">Sign Up</NavLink></li>
+                    </ul>
+                )}
             </>
         );
     }
 
     return (
-        <ul>
-            <li>
-                <NavLink exact to="/">Home</NavLink>
+        <>
+            <div className='TopHomePage'>
+                <NavLink exact to="/" className="homeButton">Home</NavLink>
                 {isLoaded && sessionLinks}
-            </li>
-        </ul>
+            </div>
+
+        </>
+
+
+
     );
 }
 

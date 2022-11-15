@@ -1,0 +1,20 @@
+.allSpots {
+    display: flex;
+    justify-content: space-around;
+}
+
+.singleSpotContainer {
+    display: grid;
+    grid-template-columns: auto, auto, auto;
+    gap: 10px;
+    padding: 10px;
+    border: 1px solid black;
+}
+
+.spotImages {
+    border: 1px solid purple;
+    width: 100px;
+    height: 100px;
+
+
+}

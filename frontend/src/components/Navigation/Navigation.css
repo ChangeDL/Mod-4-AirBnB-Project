@@ -1,0 +1,25 @@
+.TopHomePage {
+    /* display: flex; */
+
+}
+
+.createSpotLink {
+    margin-left: 80%;
+}
+
+.signUpButton {
+    /* margin-left: 80%; */
+}
+
+.loginButton {}
+
+.profileButton {
+    display: inline-flex;
+    margin-left: 91%;
+}
+
+.profile-dropdown {
+
+    margin-left: 91%;
+
+}

@@ -1,5 +1,6 @@
 // frontend/src/store/session.js
 import { csrfFetch } from './csrf';
+import { useHistory } from 'react-router-dom';
 
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
@@ -19,6 +20,7 @@ const removeUser = () => {
 
 export const login = (user) => async (dispatch) => {
     const { credential, password } = user;
+
     const response = await csrfFetch('/api/session', {
         method: 'POST',
         body: JSON.stringify({
@@ -28,6 +30,7 @@ export const login = (user) => async (dispatch) => {
     });
     const data = await response.json();
     dispatch(setUser(data.user));
+
     return response;
 };
 
