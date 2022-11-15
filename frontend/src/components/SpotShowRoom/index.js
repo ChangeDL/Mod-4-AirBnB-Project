@@ -14,10 +14,13 @@ const SpotShow = () => {
         <>
             {spotToShow ?
                 <>
-                    <img src={spotToShow.previewImage} alt='fillerForNow'></img>
+                    <img src={spotToShow.previewImage} alt='fillerForNow'></img> {/*Replace with image reducer */}
                     <div></div>
                     <h1>{spotToShow.name}</h1>
                     <h2>${spotToShow.price} Per Day</h2>
+                    <h3>Description</h3>
+                    <p>{spotToShow.description}</p>
+
                 </>
                 : ''}
         </>

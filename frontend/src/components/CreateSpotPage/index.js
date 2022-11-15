@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink, Redirect, useHistory } from "react-router-dom";
 import * as spotActions from "../../store/spots"
 
 
@@ -9,6 +9,9 @@ function CreateASpot() {
 
     const dispatch = useDispatch();
     const history = useHistory();
+    const sessionUser = useSelector((state) => state.session)
+    console.log(sessionUser)
+
     const [address, setAddress] = useState('');
     const [city, setCity] = useState('');
     const [state, setState] = useState('')
@@ -31,10 +34,18 @@ function CreateASpot() {
                 const data = await res.json();
                 if (data && data.errors) setErrors(data.errors)
             })
-        if (spot) history.push('/')
+        if (spot) history.push('/login')
 
     }
-
+    if (sessionUser.user === null) {
+        return (
+            <>
+                <div>If You'd Like To Become A Host, Please Sign In Or Make An Account</div>
+                <button><NavLink to="/login" className="loginbutton">Log In</NavLink></button>
+                <button> <NavLink to="/signup" className="signUpButton">Sign Up</NavLink></button>
+            </>
+        )
+    }
     return (
         <form onSubmit={handleSubmit}>
             <ul>
