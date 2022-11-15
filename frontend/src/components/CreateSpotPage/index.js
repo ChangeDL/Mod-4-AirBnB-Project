@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import * as spotActions from "../../store/spots"
 
 
@@ -7,7 +8,7 @@ function CreateASpot() {
 
 
     const dispatch = useDispatch();
-
+    const history = useHistory();
     const [address, setAddress] = useState('');
     const [city, setCity] = useState('');
     const [state, setState] = useState('')
@@ -25,12 +26,12 @@ function CreateASpot() {
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrors([])
-        return dispatch(spotActions.createSpot({ address, city, state, country, lat, lng, name, description, price }))
+        const spot = dispatch(spotActions.createSpot({ address, city, state, country, lat, lng, name, description, price }))
             .catch(async (res) => {
                 const data = await res.json();
                 if (data && data.errors) setErrors(data.errors)
             })
-
+        if (spot) history.push('/')
 
     }
 

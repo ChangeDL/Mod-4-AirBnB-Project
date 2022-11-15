@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
 import { NavLink, useHistory } from "react-router-dom";
 import * as sessionActions from '../../store/session';
-import CreateASpot from "../CreateSpotPage";
+
 import './Navigation.css'
 
 function ProfileButton({ user }) {
@@ -44,7 +44,7 @@ function ProfileButton({ user }) {
                     <li>{user.username}</li>
                     <li>{user.email}</li>
                     <li>
-                        <NavLink to='/spot/new'>Create A Spot</NavLink>
+                        <NavLink to='/spot/new'>Become A Host</NavLink>
                     </li>
                     <li>
                         <button onClick={logout}>Log Out</button>

@@ -1,6 +1,6 @@
 // frontend/src/store/session.js
 import { csrfFetch } from './csrf';
-import { useHistory } from 'react-router-dom';
+
 
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';

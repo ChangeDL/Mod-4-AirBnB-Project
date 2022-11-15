@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+
 import { Redirect } from "react-router-dom";
 
 
@@ -11,7 +11,7 @@ function LoginForm() {
     const [credential, setCredential] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState([]);
-    const history = useHistory();
+
     const sessionUser = useSelector((state) => state.session.user);
 
     if (sessionUser) return <Redirect to="/" />;

@@ -1,20 +1,23 @@
 .allSpots {
     display: flex;
+    box-sizing: border-box;
     justify-content: space-around;
+    object-fit: cover;
+    width: -moz-fit-content;
+    width: fit-content;
 }
 
 .singleSpotContainer {
-    display: grid;
-    grid-template-columns: auto, auto, auto;
-    gap: 10px;
-    padding: 10px;
     border: 1px solid black;
+    width: 300px;
+    height: 300px;
+    size-adjust: contain;
+
 }
 
 .spotImages {
     border: 1px solid purple;
-    width: 100px;
-    height: 100px;
-
-
+    width: 100%;
+    height: 100%;
+    object-fit: contain
 }
