@@ -43,7 +43,7 @@ function CreateASpot() {
         if (!errors.length) {
             dispatch(spotActions.createSpot({ address, city, state, country, lat, lng, name, description, price }))
             history.push('/login')
-            setTimeout(function () { window.location.reload(); }, 10);
+            setTimeout(function () { window.location.reload(); }, 1);
         }
     }
 
