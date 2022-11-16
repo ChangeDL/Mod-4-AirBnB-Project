@@ -1,0 +1,23 @@
+.reviewSection {
+    box-sizing: border-box;
+    border: 1px solid black;
+}
+
+.header-button {
+    display: flex;
+    flex-direction: row;
+}
+
+.add-review {
+    box-sizing: border-box;
+    height: fit-content;
+    margin-top: 1%;
+    margin-left: 1%;
+    transition-duration: 0.4s;
+}
+
+.add-review:hover {
+    background-color: black;
+    /* Green */
+    color: white;
+}

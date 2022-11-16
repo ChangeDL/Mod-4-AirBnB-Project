@@ -14,15 +14,17 @@ function AllSpots() {
     const history = useHistory();
 
 
+
     useEffect(() => {
         dispatch(spotActions.loadSpots())
     }, [dispatch])
 
 
+
     const deleteSpotButton = (e, id) => {
         e.preventDefault()
         dispatch(spotActions.deleteSpot(id))
-        history.push('/login')
+        setTimeout(function () { window.location.reload(); }, 10);
     }
 
     const editSpotButton = (e, id) => {
@@ -36,12 +38,18 @@ function AllSpots() {
     return (
         <>
             <div className="allSpots">
-                {Object.values(allSpots).map(({ id, address, city, state, name, price, previewImage, ownerId }) => (
+                {Object.values(allSpots).map(({ id, address, city, state, name, price, previewImage, ownerId, avgRating }) => (
                     <div key={`spot${id}`} >
                         {previewImage && previewImage.includes('.') ?
-                            <img src={previewImage} className='singleSpotContainer' alt={name}></img> : <p>No Preview Image For This Place</p>}
-                        <div>
-                            <Link to={`/spot/${id}`} className="spot-name">{name}</Link>
+                            <Link to={`/spot/${id}`}> <img src={previewImage} className='singleSpotContainer' alt={name}></img> </Link> : <p>No Preview Image For This Place</p>}
+                        <div className="name-location-price">
+                            <div className="name-rating">
+                                {avgRating ?
+                                    <span className="avgRating">★{avgRating}</span>
+                                    : <span className="avgRating">No Ratings</span>}
+                                <Link to={`/spot/${id}`} className="spot-name">{name}</Link>
+                            </div>
+
 
                             <h4 className="spot-city-state">{city},{state}</h4>
                             <h5 className="spot-price">Price Per Day ${price}</h5>

@@ -1,10 +1,8 @@
 .allSpots {
     display: flex;
     box-sizing: border-box;
-    justify-content: space-around;
-    object-fit: cover;
-    width: -moz-fit-content;
-    width: fit-content;
+    justify-content: space-between;
+    flex-direction: row;
 }
 
 .singleSpotContainer {
@@ -21,3 +19,14 @@
     height: 100%;
     object-fit: contain
 }
+
+.name-rating {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+/* .spot-name:link {
+    color: aqua;
+    text-decoration: none;
+} */

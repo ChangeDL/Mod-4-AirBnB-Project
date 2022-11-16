@@ -10,7 +10,7 @@ function CreateASpot() {
     const dispatch = useDispatch();
     const history = useHistory();
     const sessionUser = useSelector((state) => state.session)
-    console.log(sessionUser)
+
 
     const [address, setAddress] = useState('');
     const [city, setCity] = useState('');
@@ -29,14 +29,26 @@ function CreateASpot() {
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrors([])
-        const spot = dispatch(spotActions.createSpot({ address, city, state, country, lat, lng, name, description, price }))
-            .catch(async (res) => {
-                const data = await res.json();
-                if (data && data.errors) setErrors(data.errors)
-            })
-        if (spot) history.push('/login')
+        let errors = []
 
+        if (!address) errors.push("Street address is required")
+        if (!city) errors.push("City is required")
+        if (!state) errors.push("State is required")
+        if (!lat || (+lat % 1 === 0)) errors.push("Latitude is not valid")
+        if (!lng || (+lng % 1 === 0)) errors.push("Longitude is not valid")
+        if (!name || name.length > 50) errors.push("Name must be more then 1 character and less than 50 characters")
+        if (!description) errors.push("Description is required")
+        if (!price) errors.push("Price per day is required")
+        setErrors(errors)
+        if (!errors.length) {
+            dispatch(spotActions.createSpot({ address, city, state, country, lat, lng, name, description, price }))
+            history.push('/login')
+        }
     }
+
+
+
+
     if (sessionUser.user === null) {
         return (
             <>
