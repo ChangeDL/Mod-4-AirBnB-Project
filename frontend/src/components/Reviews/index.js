@@ -13,6 +13,11 @@ const Reviews = () => {
     const sessionUser = useSelector(state => state.session)
     const allSpots = useSelector((state) => state.spots)
 
+    const deleteReviewButton = (e, id) => {
+        e.preventDefault()
+        dispatch(reviewActions.deleteReview(id))
+        setTimeout(function () { window.location.reload(); }, 10);
+    }
 
 
     let spotToShow;
@@ -40,6 +45,12 @@ const Reviews = () => {
                             <div key={id} className='singleReview'>
                                 <span className="review">{review} </span>
                                 <span className="reviewRating">★ {stars}</span>
+                                {userId === sessionUser.user.id ?
+                                    <>
+                                        <button onClick={(event) => deleteReviewButton(event, id)}>Delete</button>
+                                        <button>Edit</button>
+                                    </>
+                                    : ''}
                             </div>
 
                         ))
