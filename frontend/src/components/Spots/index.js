@@ -24,7 +24,7 @@ function AllSpots() {
     const deleteSpotButton = (e, id) => {
         e.preventDefault()
         dispatch(spotActions.deleteSpot(id))
-        setTimeout(function () { window.location.reload(); }, 10);
+        setTimeout(function () { window.location.reload(); }, 1);
     }
 
     const editSpotButton = (e, id) => {
