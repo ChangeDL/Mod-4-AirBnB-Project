@@ -31,7 +31,6 @@ const ReviewForm = () => {
 
         return dispatch(reviewActions.createReview(spotId, reviewToSubmit)).catch(async (res) => {
             const data = await res.json();
-            console.log('*************', data)
             if (data && data.message) setErrors([data.message]);
 
         })
