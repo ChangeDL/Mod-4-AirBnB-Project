@@ -96,7 +96,7 @@ const EditReviewForm = () => {
                 </label>
             </div>
 
-            <button type="submit">Create Review!</button>
+            <button type="submit">Save Changes</button>
         </form>
     )
 }

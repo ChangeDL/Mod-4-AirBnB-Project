@@ -18,17 +18,23 @@ const Reviews = () => {
 
 
 
+
     let spotToShow;
     if (allSpots) {
         spotToShow = allSpots.spots[spotId]
     }
 
+    const addReviewButton = (e, id) => {
+        e.preventDefault();
+        history.push(`/spot/${id}/review/new`)
+    }
 
 
 
     const deleteReviewButton = (e, id) => {
         e.preventDefault()
         dispatch(reviewActions.deleteReview(id))
+        setTimeout(function () { window.location.reload(); }, 1);
 
     }
 
@@ -42,11 +48,10 @@ const Reviews = () => {
         <>
             <div className="header-button">
                 <h3>Reviews</h3>
-                {sessionUser.user.id !== spotToShow.ownerId ?
-                    <button className="add-review">Add Review</button>
+                {Object.values(sessionUser)[0] !== null && sessionUser.user.id !== spotToShow.ownerId ?
+                    <button className="add-review" onClick={event => addReviewButton(event, spotId)}>Add Review</button>
                     : ''}
             </div>
-            <ReviewForm />
             {reviewsForSpot && Object.values(reviewsForSpot).length > 0 ?
                 <>
                     <div className="reviewSection">
@@ -55,7 +60,7 @@ const Reviews = () => {
                             <div key={id} className='singleReview'>
                                 <span className="review">{review} </span>
                                 <span className="reviewRating">★ {stars}</span>
-                                {userId === sessionUser.user.id ?
+                                {Object.values(sessionUser)[0] !== null && userId === sessionUser.user.id ?
                                     <>
                                         <button onClick={(event) => deleteReviewButton(event, id)}>Delete</button>
                                         <button onClick={(event) => editReviewButton(event, spotId, id)}>Edit</button>

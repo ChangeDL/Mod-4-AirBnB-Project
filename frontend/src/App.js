@@ -13,6 +13,7 @@ import LoginFormModal from "./components/LoginFormModal";
 import SpotShow from "./components/SpotShowRoom";
 import EditSpotForm from "./components/EditSpotForm";
 import EditReviewForm from "./components/EditReviewForm";
+import ReviewForm from "./components/ReviewForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -45,6 +46,9 @@ function App() {
           </Route>
           <Route path='/spot/edit/:spotId'>
             <EditSpotForm />
+          </Route>
+          <Route path='/spot/:spotId/review/new'>
+            <ReviewForm />
           </Route>
           <Route path='/spot/:spotId/reviews/:reviewId'>
             <EditReviewForm />

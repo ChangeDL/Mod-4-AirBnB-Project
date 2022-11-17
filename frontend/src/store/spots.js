@@ -43,7 +43,6 @@ const readPreviewImageData = (spotId, previewImage) => async dispatch => {
         }),
     });
     const data = await response.json();
-    console.log('DATA FOR IMAGE', data)
     dispatch(addPreviewImage(data))
     return response
 }
@@ -98,8 +97,6 @@ export const createSpot = (spot) => async (dispatch) => {
     });
     const data = await response.json();
     dispatch(addSpot(data))
-    console.log("DATA FOR SPOT", data)
-    console.log("PREVIEWIMAGE URL", previewImage)
     dispatch(readPreviewImageData(data.id, previewImage))
     return response;
 };

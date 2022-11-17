@@ -21,17 +21,6 @@ function AllSpots() {
 
 
 
-    const deleteSpotButton = (e, id) => {
-        e.preventDefault()
-        dispatch(spotActions.deleteSpot(id))
-        setTimeout(function () { window.location.reload(); }, 1);
-    }
-
-    const editSpotButton = (e, id) => {
-        e.preventDefault();
-        history.push(`/spot/edit/${id}`)
-    }
-
 
 
 
@@ -54,14 +43,7 @@ function AllSpots() {
                             <h4 className="spot-city-state">{city},{state}</h4>
                             <h5 className="spot-price">Price Per Day ${price}</h5>
                         </div>
-                        {sessionUser && sessionUser.id === ownerId ?
-                            <div>
-                                <>
-                                    <button onClick={(event) => editSpotButton(event, id)}>Edit</button>
-                                    <button onClick={(event) => deleteSpotButton(event, id)}>Delete</button>
-                                </>
-                            </div>
-                            : ''}
+
 
                     </div>
                 ))

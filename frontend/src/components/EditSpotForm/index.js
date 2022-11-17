@@ -48,7 +48,8 @@ const EditSpotForm = () => {
 
     const callBack = () => {
 
-        return setTimeout(function () { history.push('/'); }, 10);
+        setTimeout(function () { history.push(`/spot/${spotId}`); }, 10);
+        return setTimeout(function () { window.location.reload(); }, 10);
     }
 
     const handleSubmit = (e) => {

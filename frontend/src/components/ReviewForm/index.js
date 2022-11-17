@@ -25,11 +25,16 @@ const ReviewForm = () => {
         stars
     }
 
+    const callback = () => {
+        setTimeout(function () { history.push(`/spot/${spotId}`); }, 10);
+        return setTimeout(function () { window.location.reload(); }, 10);
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrors([])
 
-        return dispatch(reviewActions.createReview(spotId, reviewToSubmit)).catch(async (res) => {
+        return dispatch(reviewActions.createReview(spotId, reviewToSubmit, callback)).catch(async (res) => {
             const data = await res.json();
             if (data && data.message) setErrors([data.message]);
 
