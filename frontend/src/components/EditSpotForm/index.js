@@ -18,6 +18,7 @@ const EditSpotForm = () => {
     const spotToEdit = allSpots.spots[spotId]
 
 
+
     const dispatch = useDispatch();
     const history = useHistory();
     const [address, setAddress] = useState(spotToEdit.address);
@@ -45,15 +46,19 @@ const EditSpotForm = () => {
         price
     }
 
+    const callBack = () => {
+
+        return setTimeout(function () { history.push('/'); }, 10);
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrors([])
-        const sentSpot = dispatch(spotActions.updateSpot(spot))
+        return dispatch(spotActions.updateSpot(spot, callBack))
             .catch(async (res) => {
                 const data = await res.json();
                 if (data && data.errors) setErrors(data.errors)
             })
-        if (sentSpot) history.push('/login')
     }
 
     if (spotToEdit) {

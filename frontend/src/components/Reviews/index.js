@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { Link, Redirect, useHistory, useParams } from "react-router-dom";
 import * as reviewActions from '../../store/reviews'
+import EditReviewForm from "../EditReviewForm";
 import ReviewForm from "../ReviewForm";
 import './Reviews.css'
 
@@ -9,15 +10,12 @@ import './Reviews.css'
 const Reviews = () => {
     const dispatch = useDispatch();
     const { spotId } = useParams();
+    const history = useHistory();
     const reviewsForSpot = useSelector((state) => state.reviews.reviews)
     const sessionUser = useSelector(state => state.session)
     const allSpots = useSelector((state) => state.spots)
 
-    const deleteReviewButton = (e, id) => {
-        e.preventDefault()
-        dispatch(reviewActions.deleteReview(id))
-        setTimeout(function () { window.location.reload(); }, 10);
-    }
+
 
 
     let spotToShow;
@@ -26,6 +24,18 @@ const Reviews = () => {
     }
 
 
+
+
+    const deleteReviewButton = (e, id) => {
+        e.preventDefault()
+        dispatch(reviewActions.deleteReview(id))
+
+    }
+
+    const editReviewButton = (e, spotId, reviewId) => {
+        e.preventDefault();
+        history.push(`/spot/${spotId}/reviews/${reviewId}`)
+    }
 
 
     return (
@@ -48,7 +58,7 @@ const Reviews = () => {
                                 {userId === sessionUser.user.id ?
                                     <>
                                         <button onClick={(event) => deleteReviewButton(event, id)}>Delete</button>
-                                        <button>Edit</button>
+                                        <button onClick={(event) => editReviewButton(event, spotId, id)}>Edit</button>
                                     </>
                                     : ''}
                             </div>

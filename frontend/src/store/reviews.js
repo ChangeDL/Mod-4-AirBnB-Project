@@ -26,6 +26,13 @@ const deleteAReview = (reviewId) => {
     }
 }
 
+const updateAReview = (update) => {
+    return {
+        type: UPDATE_REVIEW,
+        payload: update
+    }
+}
+
 
 
 export const loadReviews = (spotId) => async dispatch => {
@@ -35,7 +42,7 @@ export const loadReviews = (spotId) => async dispatch => {
     return response
 }
 
-export const createReview = (spotId, reviewToAdd) => async dispatch => {
+export const createReview = (spotId, reviewToAdd, cb) => async dispatch => {
     const { review, stars } = reviewToAdd
     const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
         method: "POST",
@@ -49,6 +56,7 @@ export const createReview = (spotId, reviewToAdd) => async dispatch => {
     });
     const data = await response.json();
     dispatch(addReview(data))
+
     return response;
 }
 
@@ -58,6 +66,26 @@ export const deleteReview = (reviewId) => async dispatch => {
         method: 'DELETE'
     })
     dispatch(deleteAReview(reviewId))
+    return response
+}
+
+export const updateReview = (reviewId, edittedReview, cb) => async dispatch => {
+
+    const { review, stars } = edittedReview
+
+    const response = await csrfFetch(`/api/reviews/${reviewId}`, {
+        method: 'PUT',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            review,
+            stars
+        })
+    })
+    const data = await response.json()
+    dispatch(updateAReview(data))
+    dispatch(cb());
     return response
 }
 

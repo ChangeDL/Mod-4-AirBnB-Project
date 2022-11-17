@@ -21,6 +21,7 @@ function CreateASpot() {
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
     const [price, setPrice] = useState(0)
+    const [previewImage, setPreviewImage] = useState('')
     const [errors, setErrors] = useState([])
 
 
@@ -39,9 +40,10 @@ function CreateASpot() {
         if (!name || name.length > 50) errors.push("Name must be more then 1 character and less than 50 characters")
         if (!description) errors.push("Description is required")
         if (!price) errors.push("Price per day is required")
+        if (!previewImage.includes('http')) errors.push('Preview Image Invalid')
         setErrors(errors)
         if (!errors.length) {
-            dispatch(spotActions.createSpot({ address, city, state, country, lat, lng, name, description, price }))
+            dispatch(spotActions.createSpot({ address, city, state, country, lat, lng, name, description, price, previewImage }))
             history.push('/login')
             setTimeout(function () { window.location.reload(); }, 1);
         }
@@ -60,7 +62,7 @@ function CreateASpot() {
         )
     }
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className='whole-form'>
             <ul>
 
                 {Object.values(errors).map((error, idx) => <li key={idx}>{error}</li>)}
@@ -152,6 +154,17 @@ function CreateASpot() {
                     type="number"
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
+                    required
+                />
+            </label>
+            <div></div>
+            <label>
+                Preview Image
+                <input
+                    type="url"
+                    placeholder="http://www.example.com/index.html"
+                    value={previewImage}
+                    onChange={(e) => setPreviewImage(e.target.value)}
                     required
                 />
             </label>

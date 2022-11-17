@@ -5,6 +5,9 @@ const CREATE_SPOT = 'spots/createSpot'
 const UPDATE_SPOT = 'spots/updateSpot'
 const DELETE_SPOT = 'spots/deleteSpot'
 
+const ADD_PREVIEW_IMAGE = 'previewImage/addPreviewImage'
+
+
 
 const setSpots = (spots) => {
     return {
@@ -18,6 +21,31 @@ const addSpot = (spot) => {
         type: CREATE_SPOT,
         payload: spot
     }
+}
+
+const addPreviewImage = (Image) => {
+    return {
+        type: ADD_PREVIEW_IMAGE,
+        payload: Image
+    }
+}
+
+const readPreviewImageData = (spotId, previewImage) => async dispatch => {
+    const response = await csrfFetch(`/api/spots/${spotId}/images`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            url: previewImage,
+            preview: true
+
+        }),
+    });
+    const data = await response.json();
+    console.log('DATA FOR IMAGE', data)
+    dispatch(addPreviewImage(data))
+    return response
 }
 
 const deleteASpot = (spotId) => {
@@ -50,7 +78,7 @@ export const deleteSpot = (spotId) => async dispatch => {
 }
 
 export const createSpot = (spot) => async (dispatch) => {
-    const { address, city, state, country, lat, lng, name, description, price } = spot;
+    const { address, city, state, country, lat, lng, name, description, price, previewImage } = spot;
     const response = await csrfFetch("/api/spots", {
         method: "POST",
         headers: {
@@ -65,15 +93,19 @@ export const createSpot = (spot) => async (dispatch) => {
             lng,
             name,
             description,
-            price
+            price,
         }),
     });
     const data = await response.json();
     dispatch(addSpot(data))
+    console.log("DATA FOR SPOT", data)
+    console.log("PREVIEWIMAGE URL", previewImage)
+    dispatch(readPreviewImageData(data.id, previewImage))
     return response;
 };
 
-export const updateSpot = (spot) => async (dispatch) => {
+
+export const updateSpot = (spot, cb) => async (dispatch) => {
     const { address, city, state, country, lat, lng, name, description, price } = spot;
     const response = await csrfFetch(`/api/spots/${spot.id}`, {
         method: "PUT",
@@ -94,6 +126,7 @@ export const updateSpot = (spot) => async (dispatch) => {
     });
     const data = await response.json();
     dispatch(updateASpot(data))
+    dispatch(cb)
     return response;
 };
 
@@ -123,6 +156,9 @@ const spotsReducer = (state = initialState, action) => {
                 ...state,
                 [action.payload.id]: action.payload
             }
+        case ADD_PREVIEW_IMAGE:
+            console.log(state)
+            return state
         default:
             return state
     }

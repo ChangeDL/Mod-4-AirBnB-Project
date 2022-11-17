@@ -21,12 +21,12 @@ module.exports = {
       {
         spotId: 2,
         url: 'https://imageio.forbes.com/specials-images/imageserve/61153c0d7b42cc5060baf9b8/House-in-Florida/960x0.jpg?format=jpg&width=960',
-        preview: false
+        preview: true
       },
       {
         spotId: 3,
         url: 'https://info.londonbay.com/hubfs/Home-Opt-2022/post-1-feature-opt.jpg',
-        preview: false
+        preview: true
       },
       {
         spotId: 4,

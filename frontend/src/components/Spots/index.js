@@ -39,7 +39,7 @@ function AllSpots() {
         <>
             <div className="allSpots">
                 {Object.values(allSpots).map(({ id, address, city, state, name, price, previewImage, ownerId, avgRating }) => (
-                    <div key={`spot${id}`} >
+                    <div key={`spot${id}`} className='all-spot-contents'>
                         {previewImage && previewImage.includes('.') ?
                             <Link to={`/spot/${id}`}> <img src={previewImage} className='singleSpotContainer' alt={name}></img> </Link> : <p>No Preview Image For This Place</p>}
                         <div className="name-location-price">

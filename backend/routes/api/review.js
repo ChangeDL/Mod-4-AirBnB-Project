@@ -78,6 +78,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
 
 router.put('/:reviewId', requireAuth, async (req, res) => {
     const { review, stars } = req.body
+    const errorObj = {}
     const reviewToEdit = await Review.findOne({ where: { id: req.params.reviewId } })
 
     if (!reviewToEdit) {
