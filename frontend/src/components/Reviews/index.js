@@ -34,7 +34,7 @@ const Reviews = () => {
     const deleteReviewButton = (e, id) => {
         e.preventDefault()
         dispatch(reviewActions.deleteReview(id))
-        setTimeout(function () { window.location.reload(); }, 1);
+
 
     }
 

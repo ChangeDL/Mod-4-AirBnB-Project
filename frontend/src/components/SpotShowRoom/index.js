@@ -34,6 +34,9 @@ const SpotShow = () => {
 
     }, [dispatch])
 
+    useEffect(() => {
+        dispatch(spotActions.loadSpots())
+    }, [dispatch])
 
     //Need to add in Image Reducer to have spot images
     //Need to add Review Reducer to have reviews for spots

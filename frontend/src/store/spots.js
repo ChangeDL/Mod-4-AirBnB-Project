@@ -77,7 +77,7 @@ export const deleteSpot = (spotId) => async dispatch => {
     return response
 }
 
-export const createSpot = (spot) => async (dispatch) => {
+export const createSpot = (spot, cb) => async (dispatch) => {
     const { address, city, state, country, lat, lng, name, description, price, previewImage } = spot;
     const response = await csrfFetch("/api/spots", {
         method: "POST",
@@ -99,6 +99,7 @@ export const createSpot = (spot) => async (dispatch) => {
     const data = await response.json();
     dispatch(addSpot(data))
     dispatch(readPreviewImageData(data.id, previewImage))
+    dispatch(cb);
     return response;
 };
 

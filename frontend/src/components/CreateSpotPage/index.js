@@ -26,6 +26,10 @@ function CreateASpot() {
     const [errors, setErrors] = useState([])
 
 
+    const callback = () => {
+        setTimeout(function () { history.push(`/`); }, 10);
+
+    }
 
 
     const handleSubmit = (e) => {
@@ -44,7 +48,7 @@ function CreateASpot() {
         if (!previewImage.includes('http')) errors.push('Preview Image Invalid')
         setErrors(errors)
         if (!errors.length) {
-            return dispatch(spotActions.createSpot({ address, city, state, country, lat, lng, name, description, price, previewImage })).catch(async (res) => {
+            return dispatch(spotActions.createSpot({ address, city, state, country, lat, lng, name, description, price, previewImage }, callback)).catch(async (res) => {
                 const data = await res.json();
                 if (data && data.message) setErrors([data.message]);
             })
