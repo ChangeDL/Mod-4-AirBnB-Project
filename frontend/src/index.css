@@ -3,9 +3,12 @@
     text-decoration: none;
 }
 
-html {
+html,
+body {
     margin: 2;
     padding: 2;
     height: 99%;
     width: 99%;
+    font-family: 'Poiret One', cursive;
+
 }

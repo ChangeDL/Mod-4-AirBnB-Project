@@ -30,6 +30,7 @@ const EditSpotForm = () => {
     const [name, setName] = useState(spotToEdit.name)
     const [description, setDescription] = useState(spotToEdit.description)
     const [price, setPrice] = useState(spotToEdit.price)
+    const [previewImage, setPreviewImage] = useState(spotToEdit.previewImage)
     const [errors, setErrors] = useState([])
 
 
@@ -169,7 +170,17 @@ const EditSpotForm = () => {
                         />
                     </label>
                     <div></div>
-
+                    <label>
+                        Preview Image
+                        <input
+                            type="url"
+                            placeholder="http://www.example.com/index.html"
+                            value={previewImage}
+                            onChange={(e) => setPreviewImage(e.target.value)}
+                            required
+                        />
+                    </label>
+                    <div></div>
                     <button type="submit">Update Spot!</button>
                 </form>
             )

@@ -2,17 +2,27 @@
     margin-left: 80%;
 }
 
-
-
-
-
-.profileButton {
-    display: inline-flex;
-    margin-left: 91%;
+.TopHomePage {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    box-sizing: border-box;
+    border-bottom: 1px solid rgba(76, 76, 76, 0.387);
+    border-spacing: 0, 100em;
+    margin-bottom: 1%;
+    padding-bottom: .5%;
 }
 
-.profile-dropdown {
+.right-side {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end
+}
 
-    margin-left: 91%;
+.createASpot:hover {
+    background-color: rgba(76, 73, 73, 0.185);
+}
 
+.homeButton:hover {
+    background-color: rgba(76, 73, 73, 0.185);
 }

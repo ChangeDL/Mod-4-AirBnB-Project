@@ -14,7 +14,6 @@ function AllSpots() {
     const history = useHistory();
 
 
-
     useEffect(() => {
         dispatch(spotActions.loadSpots())
     }, [dispatch])
@@ -27,21 +26,32 @@ function AllSpots() {
     return (
         <>
             <div className="allSpots">
-                {Object.values(allSpots).map(({ id, address, city, state, name, price, previewImage, ownerId, avgRating }) => (
+                {Object.values(allSpots).map(({ id, address, city, state, name, price, previewImage, ownerId, avgRating, createdAt }) => (
                     <div key={`spot${id}`} className='all-spot-contents'>
                         {previewImage && previewImage.includes('.') ?
                             <Link to={`/spot/${id}`}> <img src={previewImage} className='singleSpotContainer' alt={name}></img> </Link> : <p>No Preview Image For This Place</p>}
                         <div className="name-location-price">
                             <div className="name-rating">
                                 {avgRating ?
-                                    <span className="avgRating">★{avgRating}</span>
+                                    <span className="avgRating">★{(Math.round(avgRating * 100) / 100).toFixed(1)}</span>
                                     : <span className="avgRating">No Ratings</span>}
-                                <Link to={`/spot/${id}`} className="spot-name">{name}</Link>
+
+                                <span className="spot-city-state">{city},{state}</span>
+                                {/* <Link to={`/spot/${id}`} className="spot-name">{name}</Link> */}
                             </div>
+                            <div className="spot-created">
+                                <span>Added: </span>
 
-
-                            <h4 className="spot-city-state">{city},{state}</h4>
-                            <h5 className="spot-price">Price Per Day ${price}</h5>
+                                <span className="month">{Date(createdAt).split(' ')[1]}</span>
+                                <span className="dash">-</span>
+                                <span className="day-in-month">{Date(createdAt).split(' ')[2]}</span>
+                                <span className="dash">-</span>
+                                <span className="year">{Date(createdAt).split(' ')[3]}</span>
+                            </div>
+                            <div className="spot-price">
+                                <span className="price">${price}</span>
+                                <span className="spot-price-text"> night </span>
+                            </div>
                         </div>
 
 

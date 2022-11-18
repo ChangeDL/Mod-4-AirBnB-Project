@@ -40,6 +40,8 @@ function Navigation({ isLoaded }) {
     } else {
         sessionLinks = (
             <>
+
+
                 <button onClick={openMenu} className="profileButton">
                     <i className="fas fa-user-circle" />
                 </button>
@@ -57,7 +59,9 @@ function Navigation({ isLoaded }) {
         <>
             <div className='TopHomePage'>
                 <NavLink exact to="/" className="homeButton">Home</NavLink>
-                {isLoaded && sessionLinks}
+                <div className='right-side'>
+                    {isLoaded && sessionLinks}
+                </div>
             </div>
 
         </>

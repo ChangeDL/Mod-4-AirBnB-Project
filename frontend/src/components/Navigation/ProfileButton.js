@@ -37,14 +37,14 @@ function ProfileButton({ user }) {
     return (
         <>
             <button onClick={openMenu} className="profileButton">
-                <i className="fas fa-user-circle" />
+                <i className="fa-solid fa-bars"></i>
             </button>
             {showMenu && (
                 <ul className="profile-dropdown">
                     <li>{user.username}</li>
                     <li>{user.email}</li>
                     <li>
-                        <NavLink to='/spot/new'>Become A Host</NavLink>
+                        <NavLink to='/spot/new' className='createASpot'>Become A Host</NavLink>
                     </li>
                     <li>
                         <button onClick={logout}>Log Out</button>
