@@ -26,7 +26,8 @@ const addSpot = (spot) => {
 const addPreviewImage = (Image) => {
     return {
         type: ADD_PREVIEW_IMAGE,
-        payload: Image
+        payload: Image,
+
     }
 }
 
@@ -154,7 +155,7 @@ const spotsReducer = (state = initialState, action) => {
                 [action.payload.id]: action.payload
             }
         case ADD_PREVIEW_IMAGE:
-            console.log(state)
+            state.spots[action.payload.spotId].previewImage = action.payload.url
             return state
         default:
             return state

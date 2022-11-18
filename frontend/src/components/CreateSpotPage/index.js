@@ -10,6 +10,7 @@ function CreateASpot() {
     const dispatch = useDispatch();
     const history = useHistory();
     const sessionUser = useSelector((state) => state.session)
+    const allSpots = useSelector((state) => state.spots)
 
 
     const [address, setAddress] = useState('');
@@ -43,9 +44,13 @@ function CreateASpot() {
         if (!previewImage.includes('http')) errors.push('Preview Image Invalid')
         setErrors(errors)
         if (!errors.length) {
-            dispatch(spotActions.createSpot({ address, city, state, country, lat, lng, name, description, price, previewImage }))
-            history.push('/login')
-            setTimeout(function () { window.location.reload(); }, 10);
+            return dispatch(spotActions.createSpot({ address, city, state, country, lat, lng, name, description, price, previewImage })).catch(async (res) => {
+                const data = await res.json();
+                if (data && data.message) setErrors([data.message]);
+            })
+
+            // history.push('/login')
+            // setTimeout(function () { window.location.reload(); }, 10);
         }
     }
 
