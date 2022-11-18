@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { Link, Redirect, useHistory, useParams } from 'react-router-dom';
 import Reviews from '../Reviews';
 import * as reviewActions from "../../store/reviews"
 import * as spotActions from "../../store/spots"
@@ -29,10 +29,6 @@ const SpotShow = () => {
 
 
 
-    useEffect(() => {
-        dispatch(reviewActions.loadReviews(spotId))
-
-    }, [dispatch])
 
     useEffect(() => {
         dispatch(spotActions.loadSpots())

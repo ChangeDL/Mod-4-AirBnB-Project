@@ -56,16 +56,17 @@ export const createReview = (spotId, reviewToAdd, cb) => async dispatch => {
     });
     const data = await response.json();
     dispatch(addReview(data))
-    dispatch(cb());
+    cb();
     return response;
 }
 
 
-export const deleteReview = (reviewId) => async dispatch => {
+export const deleteReview = (reviewId, cb) => async dispatch => {
     const response = await csrfFetch(`/api/reviews/${reviewId}`, {
         method: 'DELETE'
     })
     dispatch(deleteAReview(reviewId))
+    cb();
     return response
 }
 
@@ -85,7 +86,7 @@ export const updateReview = (reviewId, edittedReview, cb) => async dispatch => {
     })
     const data = await response.json()
     dispatch(updateAReview(data))
-    dispatch(cb());
+    cb();
     return response
 }
 

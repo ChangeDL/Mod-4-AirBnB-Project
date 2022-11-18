@@ -49,7 +49,7 @@ const EditReviewForm = () => {
     }
 
     const callBack = () => {
-        return setTimeout(function () { window.location.reload(); }, 10);
+        return setTimeout(function () { history.push(`/spot/${spotId}`) }, 10);
     }
 
     const handleSubmit = (e) => {
@@ -63,6 +63,12 @@ const EditReviewForm = () => {
 
     }
 
+    const deleteReviewButton = (e, id) => {
+        e.preventDefault()
+        dispatch(reviewActions.deleteReview(id, callBack))
+
+
+    }
 
     return (
         <form onSubmit={handleSubmit}>
@@ -97,6 +103,7 @@ const EditReviewForm = () => {
             </div>
 
             <button type="submit">Save Changes</button>
+            <button onClick={(event) => deleteReviewButton(event, reviewId)}>Delete Review</button>
         </form>
     )
 }

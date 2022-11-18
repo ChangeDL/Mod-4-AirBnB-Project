@@ -6,6 +6,7 @@ const UPDATE_SPOT = 'spots/updateSpot'
 const DELETE_SPOT = 'spots/deleteSpot'
 
 const ADD_PREVIEW_IMAGE = 'previewImage/addPreviewImage'
+const DELETE_PREVIEW_IMAGE = 'previewImage/deletePreviewImage'
 
 
 
@@ -23,11 +24,18 @@ const addSpot = (spot) => {
     }
 }
 
-const addPreviewImage = (Image) => {
+const addPreviewImage = (image) => {
     return {
         type: ADD_PREVIEW_IMAGE,
-        payload: Image,
+        payload: image,
 
+    }
+}
+
+const deletePreviewImage = (image) => {
+    return {
+        type: DELETE_PREVIEW_IMAGE,
+        payload: image,
     }
 }
 

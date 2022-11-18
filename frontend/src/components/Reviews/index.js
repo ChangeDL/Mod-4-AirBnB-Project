@@ -17,6 +17,10 @@ const Reviews = () => {
 
 
 
+    useEffect(() => {
+        dispatch(reviewActions.loadReviews(spotId))
+
+    }, [dispatch])
 
 
     let spotToShow;
@@ -62,7 +66,7 @@ const Reviews = () => {
                                 <span className="reviewRating">★ {stars}</span>
                                 {Object.values(sessionUser)[0] !== null && userId === sessionUser.user.id ?
                                     <>
-                                        <button onClick={(event) => deleteReviewButton(event, id)}>Delete</button>
+
                                         <button onClick={(event) => editReviewButton(event, spotId, id)}>Edit</button>
                                     </>
                                     : ''}
