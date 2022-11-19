@@ -30,8 +30,10 @@ const SpotShow = () => {
     }
 
 
+
     useEffect(() => {
         dispatch(spotActions.loadSpots())
+        dispatch(spotActions.currentSpot(spotId))
         dispatch(reviewActions.loadReviews(spotId))
     }, [dispatch])
 

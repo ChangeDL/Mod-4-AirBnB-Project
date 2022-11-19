@@ -11,16 +11,39 @@ import AllSpots from '../Spots';
 
 
 const EditSpotForm = () => {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(spotActions.currentSpot(spotId))
+        dispatch(spotActions.loadSpots())
+    }, [dispatch])
+
     let { spotId } = useParams();
     spotId = +spotId
     const allSpots = useSelector((state) => state.spots)
+    const currentSpot = useSelector(state => state.spots.currentSpot)
     const sessionUser = useSelector((state) => state.session)
     const spotToEdit = allSpots.spots[spotId]
 
-
-
-    const dispatch = useDispatch();
     const history = useHistory();
+
+    if (currentSpot === undefined || spotToEdit === undefined) {
+        window.location.reload();
+        history.push(`/spot/${spotId}`)
+
+    }
+
+    let previewImageToDelete;
+
+    if (currentSpot !== undefined) {
+        previewImageToDelete = (currentSpot.SpotImages.find(image => image.preview === true))
+        console.log(previewImageToDelete.id)
+
+    }
+
+
+
+
     const [address, setAddress] = useState(spotToEdit.address);
     const [city, setCity] = useState(spotToEdit.city);
     const [state, setState] = useState(spotToEdit.state)
@@ -45,6 +68,7 @@ const EditSpotForm = () => {
         name,
         description,
         price,
+        previewImage
     }
 
     const callBack = () => {
@@ -53,16 +77,19 @@ const EditSpotForm = () => {
     }
 
 
+
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrors([])
 
+        dispatch(spotActions.deletePreviewImageData(previewImageToDelete.id))
         return dispatch(spotActions.updateSpot(spot, callBack))
             .catch(async (res) => {
                 const data = await res.json();
                 if (data && data.errors) setErrors(data.errors)
             })
     }
+
 
     if (spotToEdit) {
         if (sessionUser.user === null) {

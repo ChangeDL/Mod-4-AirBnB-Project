@@ -4,6 +4,7 @@ const LOAD_SPOTS = 'spots/loadSpots'
 const CREATE_SPOT = 'spots/createSpot'
 const UPDATE_SPOT = 'spots/updateSpot'
 const DELETE_SPOT = 'spots/deleteSpot'
+const LOAD_CURRENT_SPOT = 'spots/loadCurrentSpot'
 
 const ADD_PREVIEW_IMAGE = 'previewImage/addPreviewImage'
 const DELETE_PREVIEW_IMAGE = 'previewImage/deletePreviewImage'
@@ -45,6 +46,19 @@ const deletePreviewImage = (image, spotId) => {
     }
 }
 
+const loadCurrentSpot = (spot) => {
+    return {
+        type: LOAD_CURRENT_SPOT,
+        payload: spot
+    }
+}
+
+export const currentSpot = (spotId) => async dispatch => {
+    const response = await csrfFetch(`/api/spots/${spotId}`)
+    const data = await response.json()
+    dispatch(loadCurrentSpot(data))
+    return response
+}
 
 export const readPreviewImageData = (spotId, previewImage) => async dispatch => {
     const response = await csrfFetch(`/api/spots/${spotId}/images`, {
@@ -121,7 +135,7 @@ export const createSpot = (spot, cb) => async (dispatch) => {
 
 
 export const updateSpot = (spot, cb) => async (dispatch) => {
-    const { address, city, state, country, lat, lng, name, description, price } = spot;
+    const { address, city, state, country, lat, lng, name, description, price, previewImage } = spot;
     const response = await csrfFetch(`/api/spots/${spot.id}`, {
         method: "PUT",
         headers: {
@@ -141,6 +155,7 @@ export const updateSpot = (spot, cb) => async (dispatch) => {
     });
     const data = await response.json();
     dispatch(updateASpot(data))
+    dispatch(readPreviewImageData(data.id, previewImage))
     dispatch(cb)
     return response;
 };
@@ -156,6 +171,12 @@ const spotsReducer = (state = initialState, action) => {
             newState.spots = {}
             const spots = normalizeArray(action.payload.Spots)
             newState.spots = spots
+            return newState;
+        case LOAD_CURRENT_SPOT:
+            newState = Object.assign({}, state);
+            newState.currentSpot = {}
+            const currentSpot = action.payload
+            newState.currentSpot = currentSpot
             return newState;
         case CREATE_SPOT:
             return {
