@@ -4,6 +4,7 @@ import { NavLink, Redirect, useHistory, useParams } from 'react-router-dom';
 import * as spotActions from '../../store/spots'
 import * as sessionActions from '../../store/session'
 import * as reviewActions from '../../store/reviews'
+import './EditReviewForm.css'
 
 
 
@@ -93,6 +94,7 @@ const EditReviewForm = () => {
                     Rating?
                     <input
                         type="number"
+                        className='rating'
                         value={stars}
                         min={1}
                         max={5}
@@ -101,9 +103,10 @@ const EditReviewForm = () => {
                     />
                 </label>
             </div>
-
-            <button type="submit">Save Changes</button>
-            <button onClick={(event) => deleteReviewButton(event, reviewId)}>Delete Review</button>
+            <div className='buttons'>
+                <button className='save' type="submit">Save Changes</button>
+                <button className='delete' onClick={(event) => deleteReviewButton(event, reviewId)}>Delete Review</button>
+            </div>
         </form>
     )
 }

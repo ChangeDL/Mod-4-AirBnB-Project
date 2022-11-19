@@ -1,7 +1,15 @@
 /* TODO Add site wide styles */
 *:link {
     text-decoration: none;
+    color: black;
 }
+
+*:visited {
+    text-decoration: none;
+    color: black;
+}
+
+
 
 
 
@@ -9,8 +17,12 @@ html,
 body {
     margin: 2;
     padding: 2;
-    height: 99%;
-    width: 99%;
+    /* height: 99%;
+    width: 99%; */
     font-family: 'Poiret One', cursive;
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+    flex-wrap: wrap;
 
 }

@@ -1,0 +1,5 @@
+.save,
+.delete,
+.rating {
+    cursor: pointer;
+}

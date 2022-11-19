@@ -1,6 +1,7 @@
 .reviewSection {
     box-sizing: border-box;
     border: 1px solid black;
+    padding: 1%;
 }
 
 .header-button {
@@ -11,13 +12,46 @@
 .add-review {
     box-sizing: border-box;
     height: fit-content;
-    margin-top: 1%;
+    margin-top: 2.55%;
     margin-left: 1%;
     transition-duration: 0.4s;
+    border: none;
 }
 
-.add-review:hover {
-    background-color: black;
+.add-review:hover,
+.edit-button:hover {
+    background-color: rgb(255, 0, 0);
     /* Green */
     color: white;
+    cursor: pointer;
+}
+
+.edit-button {
+    box-sizing: border-box;
+    height: fit-content;
+    margin-top: 2.55%;
+    margin-left: 1%;
+    transition-duration: 0.4s;
+    border: none;
+    cursor: pointer;
+}
+
+.review {
+    margin-left: 1%;
+
+}
+
+.review-created {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: 1%;
+    margin-top: .5%;
+    margin-left: 1%;
+    border-bottom: 1px solid rgba(76, 76, 76, 0.387);
+}
+
+.createdAt {
+    margin-left: 1%;
+    font-weight: lighter;
 }

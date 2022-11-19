@@ -6,7 +6,9 @@ import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
 
+
 function Navigation({ isLoaded }) {
+
 
     const [showMenu, setShowMenu] = useState(false);
 
@@ -58,7 +60,15 @@ function Navigation({ isLoaded }) {
     return (
         <>
             <div className='TopHomePage'>
-                <NavLink exact to="/" className="homeButton">Home</NavLink>
+                <div className='left-side'>
+                    <NavLink exact to="/">
+                        <div className='left-side'>
+                            <img src='/images/ABB.png' alt='Logo' className='logo'></img>
+                            <span className="homeButton">AtmosphereBnB</span>
+
+                        </div>
+                    </NavLink>
+                </div>
                 <div className='right-side'>
                     {isLoaded && sessionLinks}
                 </div>

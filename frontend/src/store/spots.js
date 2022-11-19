@@ -31,15 +31,22 @@ const addPreviewImage = (image) => {
 
     }
 }
-
-const deletePreviewImage = (image) => {
+const deleteASpot = (spotId) => {
     return {
-        type: DELETE_PREVIEW_IMAGE,
-        payload: image,
+        type: DELETE_SPOT,
+        spotId
     }
 }
 
-const readPreviewImageData = (spotId, previewImage) => async dispatch => {
+const deletePreviewImage = (image, spotId) => {
+    return {
+        type: DELETE_PREVIEW_IMAGE,
+        payload: image
+    }
+}
+
+
+export const readPreviewImageData = (spotId, previewImage) => async dispatch => {
     const response = await csrfFetch(`/api/spots/${spotId}/images`, {
         method: "POST",
         headers: {
@@ -56,11 +63,12 @@ const readPreviewImageData = (spotId, previewImage) => async dispatch => {
     return response
 }
 
-const deleteASpot = (spotId) => {
-    return {
-        type: DELETE_SPOT,
-        spotId
-    }
+export const deletePreviewImageData = (imageId, spotId) => async dispatch => {
+    const response = await csrfFetch(`/api/spot-images/${imageId}`, {
+        method: 'DELETE'
+    });
+    dispatch(deletePreviewImage(imageId, spotId))
+    return response
 }
 
 const updateASpot = (update) => {
@@ -166,6 +174,10 @@ const spotsReducer = (state = initialState, action) => {
         case ADD_PREVIEW_IMAGE:
             state.spots[action.payload.spotId].previewImage = action.payload.url
             return state
+        case DELETE_PREVIEW_IMAGE:
+            newState = { ...state }
+            delete newState.spots[action.spotId]
+            return newState
         default:
             return state
     }

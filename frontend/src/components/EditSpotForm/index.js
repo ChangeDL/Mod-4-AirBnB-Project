@@ -44,7 +44,7 @@ const EditSpotForm = () => {
         lng,
         name,
         description,
-        price
+        price,
     }
 
     const callBack = () => {
@@ -52,9 +52,11 @@ const EditSpotForm = () => {
         setTimeout(function () { history.push(`/spot/${spotId}`); }, 10);
     }
 
+
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrors([])
+
         return dispatch(spotActions.updateSpot(spot, callBack))
             .catch(async (res) => {
                 const data = await res.json();

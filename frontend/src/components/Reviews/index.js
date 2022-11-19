@@ -17,10 +17,10 @@ const Reviews = () => {
 
 
 
-    useEffect(() => {
-        dispatch(reviewActions.loadReviews(spotId))
+    // useEffect(() => {
+    //     dispatch(reviewActions.loadReviews(spotId))
 
-    }, [dispatch])
+    // }, [dispatch])
 
 
     let spotToShow;
@@ -34,13 +34,6 @@ const Reviews = () => {
     }
 
 
-
-    const deleteReviewButton = (e, id) => {
-        e.preventDefault()
-        dispatch(reviewActions.deleteReview(id))
-
-
-    }
 
     const editReviewButton = (e, spotId, reviewId) => {
         e.preventDefault();
@@ -60,16 +53,20 @@ const Reviews = () => {
                 <>
                     <div className="reviewSection">
 
-                        {Object.values(reviewsForSpot).map(({ id, userId, review, stars }) => (
+                        {Object.values(reviewsForSpot).map(({ id, userId, review, stars, createdAt }) => (
                             <div key={id} className='singleReview'>
-                                <span className="review">{review} </span>
-                                <span className="reviewRating">★ {stars}</span>
+                                <span className="review"> {review} </span>
+                                <span className="reviewRating">★ {stars} </span>
                                 {Object.values(sessionUser)[0] !== null && userId === sessionUser.user.id ?
                                     <>
 
-                                        <button onClick={(event) => editReviewButton(event, spotId, id)}>Edit</button>
+                                        <button className="edit-button" onClick={(event) => editReviewButton(event, spotId, id)}>Edit</button>
                                     </>
                                     : ''}
+                                <div className="review-created">
+                                    <span>Review Added: </span>
+                                    <span className="createdAt"> {createdAt.split('T')[0]}</span>
+                                </div>
                             </div>
 
                         ))

@@ -1,0 +1,59 @@
+.main-image {
+    box-sizing: border-box;
+    margin-top: 1%;
+    width: 500px;
+    height: 350px;
+    border-radius: 15%;
+}
+
+.middle-of-page {
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: row;
+
+
+
+
+}
+
+.middle-middle {
+    display: grid;
+    box-sizing: border-box;
+    grid-template-columns: 200px 200px;
+    grid-row: auto auto;
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+    margin-left: 1%;
+    margin-top: 1%;
+}
+
+.top-left,
+.top-right,
+.bottom-left,
+.bottom-right {
+    width: 200px;
+    height: 150px;
+    box-sizing: border-box;
+    border-radius: 20%;
+}
+
+.stars-reviews-location,
+.spot-name {
+
+    box-sizing: border-box;
+    margin-left: 3%;
+}
+
+.description {
+    border-bottom: 1px solid rgba(76, 76, 76, 0.387);
+
+}
+
+.description-text {
+
+    border: 1px solid rgba(76, 76, 76, 0.387);
+    border-radius: 5px;
+    padding: 1%;
+    box-sizing: border-box;
+    font-weight: bold;
+}
