@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import './Spots.css'
 import * as spotActions from '../../store/spots'
 import { Link, useHistory } from "react-router-dom";
+import * as sessionActions from "../../store/session"
 
 
 function AllSpots() {
@@ -16,6 +17,12 @@ function AllSpots() {
 
     useEffect(() => {
         dispatch(spotActions.loadSpots())
+        if (sessionUser) {
+
+            dispatch(sessionActions.userSpots())
+            dispatch(sessionActions.userReviews())
+        }
+
     }, [dispatch])
 
 

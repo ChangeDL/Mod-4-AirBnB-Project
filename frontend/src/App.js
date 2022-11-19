@@ -1,7 +1,7 @@
 // frontend/src/App.js
 import React, { useState, useEffect } from "react";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import SignupFormPage from "./components/SignupFormPage";
 import * as sessionActions from "./store/session";
@@ -14,10 +14,12 @@ import SpotShow from "./components/SpotShowRoom";
 import EditSpotForm from "./components/EditSpotForm";
 import EditReviewForm from "./components/EditReviewForm";
 import ReviewForm from "./components/ReviewForm";
+import UserSpots from "./components/UserSpots";
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+
 
   // useEffect(() => {
   //   dispatch(spotActions.loadSpots())
@@ -55,6 +57,9 @@ function App() {
           </Route>
           <Route path='/spot/:spotId'>
             <SpotShow />
+          </Route>
+          <Route path='/spots/my-spots' >
+            <UserSpots />
           </Route>
           <AllSpots />
         </Switch>
