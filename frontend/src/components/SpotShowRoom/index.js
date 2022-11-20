@@ -17,6 +17,7 @@ const SpotShow = () => {
     const reviewsForSpot = useSelector(state => state.reviews)
 
 
+
     const deleteSpotButton = (e, id) => {
         e.preventDefault()
         dispatch(spotActions.deleteSpot(id))
@@ -44,7 +45,7 @@ const SpotShow = () => {
 
     return (
         <>
-            {spotToShow ?
+            {spotToShow !== undefined ?
                 <>
                     <div className='allContents'>
 
@@ -76,7 +77,10 @@ const SpotShow = () => {
                                     </>
                                 </div>
                                 : ''}
-                            <h2>${spotToShow.price} Per Day</h2>
+                            <div className='price-night'>
+                                <span className='price'>${spotToShow.price} </span>
+                                <span className='night'> night</span>
+                            </div>
                             <h3 className='description'>Description</h3>
                             <div className='description-text'>
                                 <span>{spotToShow.description}</span>
@@ -86,7 +90,12 @@ const SpotShow = () => {
                     </div>
 
                 </>
-                : ''}
+                :
+                <>
+                    <h1>404 Spot Not Found</h1>
+                </>
+
+            }
         </>
     )
 }

@@ -11,6 +11,17 @@ function LoginFormPage() {
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState([]);
 
+
+    const demoUser = {
+        credential: 'Demo-lition',
+        password: 'password'
+    }
+
+    const handleDemoLogin = (e) => {
+        e.preventDefault();
+        return dispatch(sessionActions.login(demoUser))
+    }
+
     if (sessionUser) return (
         <Redirect to="/" />
     );
@@ -48,6 +59,7 @@ function LoginFormPage() {
                     required
                 />
             </label>
+            <button onClick={handleDemoLogin}>DemoUser</button>
             <button type="submit">Log In</button>
         </form>
     );

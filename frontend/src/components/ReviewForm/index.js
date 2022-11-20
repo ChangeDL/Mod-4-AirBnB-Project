@@ -48,35 +48,46 @@ const ReviewForm = () => {
         <form onSubmit={handleSubmit}>
             <ul>
 
-                {Object.values(errors).map((error, idx) => <li key={idx}>{error}</li>)}
+                {Object.values(errors).map((error, idx) => <li key={idx}>{error} Please Sign In or Sign Up</li>)}
             </ul>
-            <div className='review-text'>
-                <label>
-                    Thought's On This Spot?
-                </label>
-                <textarea
-                    type="text"
-                    value={review}
-                    onChange={(e) => setReview(e.target.value)}
-                    required
-                />
-            </div>
-            <div>
+            <div className='whole-form'>
 
-                <label>
-                    Rating?
-                    <input
-                        type="number"
-                        value={stars}
-                        min={1}
-                        max={5}
-                        onChange={(e) => setStars(e.target.value)}
+                <div className='review-text'>
+                    <label>
+                        <span>Thought's On This Spot?</span>
+                    </label>
+                    <textarea
+                        className='textarea'
+                        style={{ resize: "none " }}
+                        type="text"
+                        value={review}
+                        onChange={(e) => setReview(e.target.value)}
                         required
                     />
-                </label>
-            </div>
+                </div>
+                <div className='review-text'>
 
-            <button type="submit">Create Review!</button>
+                    <label>
+                        <div className='rating'>
+
+                            <span>Rating: </span>
+                            <input
+                                className='stars'
+                                type="number"
+                                value={stars}
+                                min={1}
+                                max={5}
+                                onChange={(e) => setStars(e.target.value)}
+                                required
+                            />
+                        </div>
+                    </label>
+                </div>
+                <div className='review-text'>
+
+                    <button type="submit">Create Review!</button>
+                </div>
+            </div>
         </form>
     )
 }

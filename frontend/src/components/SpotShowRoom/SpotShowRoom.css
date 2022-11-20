@@ -2,7 +2,7 @@
     box-sizing: border-box;
     margin-top: 1%;
     width: 500px;
-    height: 350px;
+    height: 450px;
     border-radius: 15%;
 }
 
@@ -32,9 +32,10 @@
 .bottom-left,
 .bottom-right {
     width: 200px;
-    height: 150px;
+    height: 200px;
     box-sizing: border-box;
     border-radius: 20%;
+
 }
 
 .stars-reviews-location,
@@ -45,6 +46,7 @@
 }
 
 .description {
+
     border-bottom: 1px solid rgba(76, 76, 76, 0.387);
 
 }
@@ -56,4 +58,13 @@
     padding: 1%;
     box-sizing: border-box;
     font-weight: bold;
+}
+
+.price-night {
+    display: flex;
+    flex-direction: row;
+}
+
+.night {
+    margin-left: .5%;
 }

@@ -37,6 +37,9 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
+          <Route exact path='/'>
+            <AllSpots />
+          </Route>
           <Route path="/signup">
             <SignupFormPage />
           </Route>
@@ -58,10 +61,13 @@ function App() {
           <Route path='/spot/:spotId'>
             <SpotShow />
           </Route>
-          <Route path='/spots/my-spots' >
+          {/* <Route path='/spots/my-spots' >
             <UserSpots />
+          </Route> */}
+
+          <Route>
+            <h1>404: Page not found</h1>
           </Route>
-          <AllSpots />
         </Switch>
       )}
     </>

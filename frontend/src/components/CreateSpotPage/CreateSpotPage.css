@@ -1,0 +1,52 @@
+.whole-spot-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1%;
+    background-color: rgba(255, 255, 255, 0.7);
+
+    background-size: contain;
+
+}
+
+
+.country {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.inputs {
+    margin-left: 1%;
+}
+
+.spot-name {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.preview-image {
+    display: flex;
+}
+
+.input-country {
+    margin-left: 1%;
+    margin-right: 2%;
+
+}
+
+.labels {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.tag-label {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    padding: 5% 10%;
+    border: 5px solid rgba(76, 76, 76, 0.387);
+}

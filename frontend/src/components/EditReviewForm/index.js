@@ -4,7 +4,8 @@ import { NavLink, Redirect, useHistory, useParams } from 'react-router-dom';
 import * as spotActions from '../../store/spots'
 import * as sessionActions from '../../store/session'
 import * as reviewActions from '../../store/reviews'
-import './EditReviewForm.css'
+import './ReviewForm.css'
+
 
 
 
@@ -75,37 +76,49 @@ const EditReviewForm = () => {
         <form onSubmit={handleSubmit}>
             <ul>
 
-                {Object.values(errors).map((error, idx) => <li key={idx}>{error}</li>)}
+                {Object.values(errors).map((error, idx) => <li key={idx}>{error}  Please Sign Into The Account For This Review</li>)}
             </ul>
-            <div className='review-text'>
-                <label>
-                    Thought's On This Spot?
-                </label>
-                <textarea
-                    type="text"
-                    value={review}
-                    onChange={(e) => setReview(e.target.value)}
-                    required
-                />
-            </div>
-            <div>
+            <div className='whole-review-form'>
 
-                <label>
-                    Rating?
-                    <input
-                        type="number"
-                        className='rating'
-                        value={stars}
-                        min={1}
-                        max={5}
-                        onChange={(e) => setStars(e.target.value)}
+                <div className='review-text'>
+                    <label>
+                        <span>Thought's On This Spot?</span>
+                    </label>
+                    <textarea
+                        className='textarea'
+                        style={{ resize: "none " }}
+                        type="text"
+                        value={review}
+                        onChange={(e) => setReview(e.target.value)}
                         required
                     />
-                </label>
-            </div>
-            <div className='buttons'>
-                <button className='save' type="submit">Save Changes</button>
-                <button className='delete' onClick={(event) => deleteReviewButton(event, reviewId)}>Delete Review</button>
+                </div>
+                <div className='review-text'>
+
+                    <label>
+                        <div className='rating'>
+
+                            <span>Rating: </span>
+                            <input
+                                className='stars'
+                                type="number"
+                                value={stars}
+                                min={1}
+                                max={5}
+                                onChange={(e) => setStars(e.target.value)}
+                                required
+                            />
+                        </div>
+                    </label>
+                </div>
+                <div className='buttons'>
+                    <div>
+                        <button className='save' type="submit">Save Changes</button>
+                    </div>
+                    <div className='delete'>
+                        <button className='delete-button' onClick={(event) => deleteReviewButton(event, reviewId)}>Delete Review</button>
+                    </div>
+                </div>
             </div>
         </form>
     )
