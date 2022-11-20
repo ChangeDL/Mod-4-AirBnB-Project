@@ -46,7 +46,7 @@ const SpotShow = () => {
     return (
         <>
             {spotToShow !== undefined ?
-                <>
+                <div className='whole-page'>
                     <div className='allContents'>
 
                         <h1 className='spot-name'>{spotToShow.name} - 3 Bedroom - 2 Bath</h1>
@@ -89,7 +89,7 @@ const SpotShow = () => {
                         </div>
                     </div>
 
-                </>
+                </div>
                 :
                 <>
                     <h1>404 Spot Not Found</h1>

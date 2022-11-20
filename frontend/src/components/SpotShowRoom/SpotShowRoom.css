@@ -1,3 +1,9 @@
+.whole-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .main-image {
     box-sizing: border-box;
     margin-top: 1%;
@@ -58,6 +64,7 @@
     padding: 1%;
     box-sizing: border-box;
     font-weight: bold;
+    width: 1000px;
 }
 
 .price-night {
