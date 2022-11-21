@@ -37,7 +37,7 @@ To Launch Full Application Locally.
 
 *1st: Clone Repo Into Desired Folder
 
-*2nd: NPM Install
+*2nd: npm install In The Root Directory
 
 *3rd: In The Backend Folder, Add A .env File And Inside Of It Add
   PORT=8000
