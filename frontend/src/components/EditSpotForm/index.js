@@ -28,9 +28,9 @@ const EditSpotForm = () => {
     const history = useHistory();
 
     if (currentSpot === undefined || spotToEdit === undefined) {
-        window.location.reload();
         history.push(`/spot/${spotId}`)
 
+        setTimeout(function () { window.location.reload(); }, 10);
     }
 
     let previewImageToDelete;
