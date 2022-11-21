@@ -37,7 +37,7 @@ const EditSpotForm = () => {
 
     if (currentSpot !== undefined) {
         previewImageToDelete = (currentSpot.SpotImages.find(image => image.preview === true))
-        console.log(previewImageToDelete.id)
+
 
     }
 

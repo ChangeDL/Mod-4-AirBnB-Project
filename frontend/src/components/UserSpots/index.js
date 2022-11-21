@@ -25,7 +25,6 @@ function UserSpots() {
         allSpots = (session.userSpots)
     }
 
-    console.log(allUserSpots)
 
 
     return (
