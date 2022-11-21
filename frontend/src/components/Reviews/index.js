@@ -56,16 +56,19 @@ const Reviews = () => {
                         {Object.values(reviewsForSpot).map(({ id, userId, review, stars, createdAt }) => (
                             <div key={id} className='singleReview'>
                                 <span className="review"> {review} </span>
-                                <span className="reviewRating">★ {stars} </span>
-                                {Object.values(sessionUser)[0] !== null && userId === sessionUser.user.id ?
-                                    <>
 
-                                        <button className="edit-button" onClick={(event) => editReviewButton(event, spotId, id)}>Edit</button>
-                                    </>
-                                    : ''}
+
                                 <div className="review-created">
                                     <span>Review Added: </span>
-                                    <span className="createdAt"> {createdAt.split('T')[0]}</span>
+                                    <span className="createdAt"> {createdAt.split('T')[0]} </span>
+                                    <span className="reviewRating"> ★{stars} </span>
+                                    {Object.values(sessionUser)[0] !== null && userId === sessionUser.user.id ?
+                                        <>
+                                            <div>
+                                                <button className="edit-button" onClick={(event) => editReviewButton(event, spotId, id)}>Edit</button>
+                                            </div>
+                                        </>
+                                        : ''}
                                 </div>
                             </div>
 

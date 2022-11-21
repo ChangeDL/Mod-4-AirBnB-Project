@@ -1,7 +1,9 @@
-.whole-page {
+.whole-page,
+.allContents {
     display: flex;
     flex-direction: column;
     justify-content: center;
+
 }
 
 .main-image {

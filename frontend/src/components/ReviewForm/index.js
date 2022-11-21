@@ -48,7 +48,7 @@ const ReviewForm = () => {
         <form onSubmit={handleSubmit}>
             <ul>
 
-                {Object.values(errors).map((error, idx) => <li key={idx}>{error} Please Sign In or Sign Up</li>)}
+                {Object.values(errors).map((error, idx) => <li key={idx}>{error}</li>)}
             </ul>
             <div className='whole-form'>
 

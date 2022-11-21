@@ -12,14 +12,14 @@ import AllSpots from '../Spots';
 
 const EditSpotForm = () => {
     const dispatch = useDispatch();
+    let { spotId } = useParams();
+    spotId = +spotId
 
     useEffect(() => {
         dispatch(spotActions.currentSpot(spotId))
         dispatch(spotActions.loadSpots())
-    }, [dispatch])
+    }, [dispatch, spotId])
 
-    let { spotId } = useParams();
-    spotId = +spotId
     const allSpots = useSelector((state) => state.spots)
     const currentSpot = useSelector(state => state.spots.currentSpot)
     const sessionUser = useSelector((state) => state.session)
@@ -102,14 +102,14 @@ const EditSpotForm = () => {
         }
         if (sessionUser.user.id === spotToEdit.ownerId) {
             return (
-                <form onSubmit={handleSubmit} className='whole-spot-form'>
+                <form onSubmit={handleSubmit} className='whole-sign-up'>
                     <ul>
 
                         {Object.values(errors).map((error, idx) => <li key={idx}>{error}</li>)}
                     </ul>
                     <div >
                         <label>
-                            <div className="tag-label">
+                            <div className="input-sign-up">
 
                                 <span className="labels">Name Of Spot:</span>
                                 <input
@@ -124,7 +124,7 @@ const EditSpotForm = () => {
                     </div>
                     <div >
                         <label >
-                            <div className="tag-label">
+                            <div className="input-preview2">
                                 <span className="labels">Country:</span>
                                 <input
                                     className="input-country"
@@ -138,7 +138,7 @@ const EditSpotForm = () => {
                     </div>
                     <div className="state">
                         <label>
-                            <div className="tag-label">
+                            <div className="input-sign-up">
                                 <span className="labels">State:</span>
                                 <input
                                     className="inputs"
@@ -152,7 +152,7 @@ const EditSpotForm = () => {
                     </div>
                     <div className="city">
                         <label>
-                            <div className="tag-label">
+                            <div className="input-sign-up">
                                 <span className="labels">City:</span>
                                 <input
                                     className="inputs"
@@ -166,7 +166,7 @@ const EditSpotForm = () => {
                     </div>
                     <div className="address">
                         <label>
-                            <div className="tag-label">
+                            <div className="input-sign-up">
                                 <span className="labels">Address:</span>
                                 <input
                                     className="inputs"
@@ -180,7 +180,7 @@ const EditSpotForm = () => {
                     </div>
                     <div className="latitude">
                         <label>
-                            <div className="tag-label">
+                            <div className="input-sign-up">
                                 <span className="labels">Latitude: (decimal)</span>
                                 <input
                                     className="inputs"
@@ -194,7 +194,7 @@ const EditSpotForm = () => {
                     </div>
                     <div className="longitude">
                         <label>
-                            <div className="tag-label">
+                            <div className="input-sign-up">
                                 <span className="labels">Longitude: (decimal)</span>
                                 <input
                                     className="inputs"
@@ -208,10 +208,10 @@ const EditSpotForm = () => {
                     </div>
                     <div className="description-of-spot">
                         <label>
-                            <div className="tag-label">
+                            <div className="input-sign-up">
                                 <span className="labels">Description:</span>
                                 <textarea
-                                    style={{ resize: "none " }}
+                                    style={{ resize: "none ", height: 100 }}
                                     className="inputs"
                                     type="text"
                                     value={description}
@@ -223,7 +223,7 @@ const EditSpotForm = () => {
                     </div>
                     <div className="price-of-spot">
                         <label>
-                            <div className="tag-label">
+                            <div className="input-sign-up">
                                 <span className="labels">Price:</span>
                                 <input
                                     className="inputs"
@@ -238,7 +238,7 @@ const EditSpotForm = () => {
                     </div>
                     <div className="preview-image">
                         <label>
-                            <div className="tag-label">
+                            <div className="input-preview">
                                 <span className="labels">Preview Image: </span>
                                 <input
                                     className="inputs"
@@ -251,7 +251,7 @@ const EditSpotForm = () => {
                             </div>
                         </label>
                     </div>
-                    <div>
+                    <div className="submit-button">
                         <button type="submit">Save Changes</button>
                     </div>
                 </form>

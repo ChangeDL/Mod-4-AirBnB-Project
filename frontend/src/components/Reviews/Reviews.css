@@ -30,7 +30,7 @@
     box-sizing: border-box;
     height: fit-content;
     margin-top: 2.55%;
-    margin-left: 1%;
+    margin-left: 20%;
     transition-duration: 0.4s;
     border: none;
     cursor: pointer;
@@ -54,4 +54,14 @@
 .createdAt {
     margin-left: 1%;
     font-weight: lighter;
+}
+
+.reviewRating {
+    margin-left: 1%;
+}
+
+.singleReview {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1%;
 }
