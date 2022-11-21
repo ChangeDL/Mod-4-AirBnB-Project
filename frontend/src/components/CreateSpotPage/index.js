@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Redirect, useHistory } from "react-router-dom";
 import * as spotActions from "../../store/spots"
+import LoginFormModal from "../LoginFormModal";
 import './CreateSpotPage.css'
 
 function CreateASpot() {
@@ -65,7 +66,7 @@ function CreateASpot() {
         return (
             <>
                 <div>If You'd Like To Become A Host, Please Sign In Or Make An Account</div>
-                <button><NavLink to="/login" className="loginbutton">Log In</NavLink></button>
+                <LoginFormModal />
                 <button> <NavLink to="/signup" className="signUpButton">Sign Up</NavLink></button>
             </>
         )
