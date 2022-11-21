@@ -45,13 +45,13 @@ To Launch Full Application Locally.
   JWT_EXPIRES_IN=604800
 
 *4th: cd Into The Backend Folder And In The Terminal Run
-    * npx dotenv sequelize-cli db:migrate
-    * npx dotenv sequelize-cli db:seed:all
+*5th npx dotenv sequelize-cli db:migrate
+*6th npx dotenv sequelize-cli db:seed:all
     
-*5th: While Still In Your Backend Folder: npm start In The Terminal
+*7th: While Still In Your Backend Folder: npm start In The Terminal
 
-*6th: Once Loaded, Create A New Terminal With The Root Folder Loaded
+*8th: Once Loaded, Create A New Terminal With The Root Folder Loaded
 
-*7th: In The New Terminal, cd Into The Frontend and npm start
+*9th: In The New Terminal, cd Into The Frontend and npm start
 
-*8th: If Site Doesn't Automatically Open, In Your Browser Go To http://localhost:3000
+*10th: If Site Doesn't Automatically Open, In Your Browser Go To http://localhost:3000
