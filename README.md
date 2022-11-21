@@ -34,6 +34,7 @@ SHOWCASE
 
 
 To Launch Full Application Locally.
+
 *1st: Clone Repo Into Desired Folder
 
 *2nd: NPM Install
