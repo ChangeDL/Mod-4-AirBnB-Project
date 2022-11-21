@@ -4,7 +4,7 @@ This is my clone for AirBnB call "Atmosphere Breakfast N Bed"
 
 The project spanned over about a month and a half to 2 months. I learned how to make the backend first with Sqlite and than made that in a week.
 Next I learned how to make the frontend with React and Redux and worked on 2 features for my clone (Spots, and Reviews).
-This clone is a work in progress as there are still many features needing to be added at the time of creating this readMe. (11/20/2022)
+This clone is a work in progress as there are still many features needing to be added at the time of creating this README. (11/20/2022)
 
 List of Technologies Used
 
