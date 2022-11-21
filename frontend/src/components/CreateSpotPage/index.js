@@ -78,7 +78,7 @@ function CreateASpot() {
             </ul>
             <div >
                 <label>
-                    <div className="input-sign-up">
+                    <div className="input-sign-up3">
 
                         <span className="labels">Name Of Spot:</span>
                         <input
@@ -107,7 +107,7 @@ function CreateASpot() {
             </div>
             <div className="state">
                 <label>
-                    <div className="input-sign-up">
+                    <div className="input-sign-up3">
                         <span className="labels">State:</span>
                         <input
                             className="inputs"
@@ -121,7 +121,7 @@ function CreateASpot() {
             </div>
             <div className="city">
                 <label>
-                    <div className="input-sign-up">
+                    <div className="input-sign-up3">
                         <span className="labels">City:</span>
                         <input
                             className="inputs"
@@ -135,7 +135,7 @@ function CreateASpot() {
             </div>
             <div className="address">
                 <label>
-                    <div className="input-sign-up">
+                    <div className="input-sign-up3">
                         <span className="labels">Address:</span>
                         <input
                             className="inputs"
@@ -149,7 +149,7 @@ function CreateASpot() {
             </div>
             <div className="latitude">
                 <label>
-                    <div className="input-sign-up">
+                    <div className="input-sign-up3">
                         <span className="labels">Latitude: (decimal)</span>
                         <input
                             className="inputs"
@@ -163,7 +163,7 @@ function CreateASpot() {
             </div>
             <div className="longitude">
                 <label>
-                    <div className="input-sign-up">
+                    <div className="input-sign-up3">
                         <span className="labels">Longitude: (decimal)</span>
                         <input
                             className="inputs"
@@ -177,7 +177,7 @@ function CreateASpot() {
             </div>
             <div className="description-of-spot">
                 <label>
-                    <div className="input-sign-up">
+                    <div className="input-sign-up3">
                         <span className="labels">Description:</span>
                         <textarea
                             style={{ resize: "none ", height: 100 }}
@@ -192,7 +192,7 @@ function CreateASpot() {
             </div>
             <div className="price-of-spot">
                 <label>
-                    <div className="input-sign-up">
+                    <div className="input-sign-up3">
                         <span className="labels">Price:</span>
                         <input
                             className="inputs"

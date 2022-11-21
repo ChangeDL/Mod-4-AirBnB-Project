@@ -1,23 +1,20 @@
 // frontend/src/components/LoginFormModal/index.js
 import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
 import { Modal } from '../../context/Modal';
 import LoginForm from './LoginForm';
 
-
 function LoginFormModal() {
-    const [showModal, setShowModal] = useState(true);
-
-    if (showModal === false) return <Redirect to="/" />;
+    const [showModal, setShowModal] = useState(false);
 
     return (
-        <div className='loginPage'>
+        <>
+            <button classname='loginbutton' onClick={() => setShowModal(true)}>Log In</button>
             {showModal && (
                 <Modal onClose={() => setShowModal(false)}>
                     <LoginForm />
                 </Modal>
             )}
-        </div>
+        </>
     );
 }
 

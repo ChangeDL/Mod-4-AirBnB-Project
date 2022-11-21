@@ -6,7 +6,7 @@ import * as sessionActions from '../../store/session';
 
 import './Navigation.css'
 
-function ProfileButton({ user }) {
+function ProfileButton({ user, setLogin, setShowModal }) {
     const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState(false);
     const history = useHistory();
@@ -39,8 +39,8 @@ function ProfileButton({ user }) {
             <button onClick={openMenu} className="profileButton">
                 <i className="fa-solid fa-bars"></i>
             </button>
-            {showMenu && (
-                <ul className="profile-dropdown">
+            {showMenu && (user ?
+                (< ul className="profile-dropdown">
                     <span className="username">Username: {user.username}</span>
                     <span className="email">Email: {user.email}</span>
                     <span>
@@ -49,8 +49,27 @@ function ProfileButton({ user }) {
                     <span>
                         <button onClick={logout} className='logout'>Log Out</button>
                     </span>
-                </ul>
-            )}
+                </ul>) :
+                (<ul className="profile-dropdown">
+                    <button
+                        className="logout"
+                        onClick={() => {
+                            setLogin(true)
+                            setShowModal(true)
+                        }}>Log In</button>
+
+                    <button
+                        className="logout"
+                        onClick={() => {
+
+                            setLogin(false)
+                            setShowModal(true)
+                        }}>
+                        Sign Up
+                    </button>
+                </ul>)
+            )
+            }
         </>
     );
 }

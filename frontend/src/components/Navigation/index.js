@@ -5,31 +5,15 @@ import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
-
+import LoginFormModal from '../LoginFormModal';
+import { Modal } from '../../context/Modal';
+import LoginForm from '../LoginFormModal/LoginForm';
+import SignupFormPage from '../SignupFormPage';
 
 function Navigation({ isLoaded }) {
-
-
-    const [showMenu, setShowMenu] = useState(false);
-
-    const openMenu = () => {
-        if (showMenu) return;
-        setShowMenu(true);
-    };
-
-    useEffect(() => {
-        if (!showMenu) return;
-
-        const closeMenu = () => {
-            setShowMenu(false);
-        };
-
-        document.addEventListener('click', closeMenu);
-
-        return () => document.removeEventListener("click", closeMenu);
-    }, [showMenu]);
-
     const sessionUser = useSelector(state => state.session.user);
+    const [showModal, setShowModal] = useState(false)
+    const [login, setLogin] = useState(true)
 
     let sessionLinks;
     if (sessionUser) {
@@ -42,17 +26,8 @@ function Navigation({ isLoaded }) {
     } else {
         sessionLinks = (
             <>
-
-
-                <button onClick={openMenu} className="profileButton">
-                    <i className="fas fa-user-circle" />
-                </button>
-                {showMenu && (
-                    <ul className="profile-dropdown">
-                        <li><NavLink to="/login" className="loginbutton">Log In</NavLink></li>
-                        <li> <NavLink to="/signup" className="signUpButton">Sign Up</NavLink></li>
-                    </ul>
-                )}
+                <LoginFormModal />
+                <NavLink to="/signup">Sign Up</NavLink>
             </>
         );
     }
@@ -60,6 +35,9 @@ function Navigation({ isLoaded }) {
     return (
         <>
             <div className='TopHomePage'>
+
+
+
                 <div className='left-side'>
                     <NavLink exact to="/">
                         <div className='left-side'>
@@ -70,8 +48,18 @@ function Navigation({ isLoaded }) {
                     </NavLink>
                 </div>
                 <div className='right-side'>
-                    {isLoaded && sessionLinks}
+                    {isLoaded && (
+                        <ProfileButton
+                            user={sessionUser}
+                            setLogin={setLogin}
+                            setShowModal={setShowModal}
+                        />
+                    )}
+                    {showModal && <Modal onClose={() => setShowModal(false)}>
+                        {login ? <LoginForm setShowModal={setShowModal} /> : <SignupFormPage setShowModal={setShowModal} />}
+                    </Modal>}
                 </div>
+
             </div>
 
         </>

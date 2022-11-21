@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 
 
-function LoginForm() {
+function LoginForm({ setShowModal }) {
     const dispatch = useDispatch();
     const [credential, setCredential] = useState("");
     const [password, setPassword] = useState("");
@@ -25,18 +25,21 @@ function LoginForm() {
     const handleDemoLogin = (e) => {
         e.preventDefault();
         return dispatch(sessionActions.login(demoUser))
+            .then(setShowModal(false))
     }
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors([]);
-        return dispatch(sessionActions.login({ credential, password })).catch(
-            async (res) => {
-                const data = await res.json();
-                if (data && data.errors) setErrors(data.errors);
-            },
-        );
+        return dispatch(sessionActions.login({ credential, password }))
+            .then(setShowModal(false))
+            .catch(
+                async (res) => {
+                    const data = await res.json();
+                    if (data && data.errors) setErrors(data.errors);
+                },
+            );
     };
 
 

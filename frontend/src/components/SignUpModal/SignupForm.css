@@ -7,7 +7,7 @@
     display: flex;
     flex-direction: column;
     margin-top: 1%;
-    width: 800px;
+    width: 200px;
     margin-left: 8%;
 }
 
@@ -19,9 +19,18 @@
     margin-left: 8%;
 }
 
-.submit-button {
+.input-sign-up3 {
+    display: flex;
+    flex-direction: column;
     margin-top: 1%;
+    width: 800px;
+    margin-left: 8%;
+}
+
+.submit-button {
+    margin-top: 2%;
     margin-left: 9%;
+    margin-bottom: 5%;
 }
 
 .input-preview {

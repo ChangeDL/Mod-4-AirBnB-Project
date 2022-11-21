@@ -47,9 +47,9 @@ function App() {
           <Route path='/spot/new'>
             <CreateASpot />
           </Route>
-          <Route path='/login'>
+          {/* <Route path='/login'>
             <LoginFormModal />
-          </Route>
+          </Route> */}
           <Route path='/spot/edit/:spotId'>
             <EditSpotForm />
           </Route>
