@@ -39,20 +39,26 @@ To Launch Full Application Locally.
 
 *2nd: npm install In The Root Directory
 
-*3rd: In The Backend Folder, Add A .env File And Inside Of It Add
-  PORT=8000
-  DB_FILE=db/dev.db
-  JWT_SECRET=«generate_strong_secret_here»
-  JWT_EXPIRES_IN=604800
+*3rd: In The Backend Folder, Add A .env File And Inside Of It Add:
 
-*4th: cd Into The Backend Folder And In The Terminal Run
-*5th npx dotenv sequelize-cli db:migrate
-*6th npx dotenv sequelize-cli db:seed:all
+PORT=8000
+
+DB_FILE=db/dev.db
+
+JWT_SECRET=«generate_strong_secret_here»
+
+JWT_EXPIRES_IN=604800
+
+*4th: cd Into The Backend Folder And In The Terminal Run:
+
+npx dotenv sequelize-cli db:migrate
+
+npx dotenv sequelize-cli db:seed:all
     
-*7th: While Still In Your Backend Folder: npm start In The Terminal
+*5th: While Still In Your Backend Folder: npm start In The Terminal
 
-*8th: Once Loaded, Create A New Terminal With The Root Folder Loaded
+*6th: Once Loaded, Create A New Terminal With The Root Folder Loaded
 
-*9th: In The New Terminal, cd Into The Frontend and npm start
+*7th: In The New Terminal, cd Into The Frontend and npm start
 
-*10th: If Site Doesn't Automatically Open, In Your Browser Go To http://localhost:3000
+*8th: If Site Doesn't Automatically Open, In Your Browser Go To http://localhost:3000
