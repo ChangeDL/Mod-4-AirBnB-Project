@@ -15,6 +15,7 @@ import EditSpotForm from "./components/EditSpotForm";
 import EditReviewForm from "./components/EditReviewForm";
 import ReviewForm from "./components/ReviewForm";
 import UserSpots from "./components/UserSpots";
+import SignUpFormModal from "./components/SignUpModal";
 
 function App() {
   const dispatch = useDispatch();
@@ -41,7 +42,7 @@ function App() {
             <AllSpots />
           </Route>
           <Route path="/signup">
-            <SignupFormPage />
+            <SignUpFormModal />
           </Route>
           <Route path='/spot/new'>
             <CreateASpot />

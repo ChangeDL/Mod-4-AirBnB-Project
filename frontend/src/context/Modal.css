@@ -8,6 +8,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
 }
 
 #modal-background {
@@ -19,9 +20,14 @@
     background-color: rgba(0, 0, 0, 0.7);
     background-image: url('https://i.postimg.cc/FH2VstzC/airbnb-2.jpg');
     background-size: contain;
+
 }
 
 #modal-content {
+    display: flex;
+    box-sizing: border-box;
     position: absolute;
     background-color: white;
+    width: 250px;
+
 }
