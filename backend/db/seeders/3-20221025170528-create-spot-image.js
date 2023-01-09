@@ -1,5 +1,10 @@
 'use strict';
 
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;  // define your schema in options object
+}
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -12,7 +17,8 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    await queryInterface.bulkInsert('SpotImages', [
+    options.tableName = 'SpotImages'
+    await queryInterface.bulkInsert(options, [
       {
         spotId: 1,
         url: 'https://www.thehousedesigners.com/images/plans/HDS/bulk/7383/4093-Direct-front-option-final_03.jpg',
@@ -149,7 +155,8 @@ module.exports = {
      * await queryInterface.bulkDelete('People', null, {});
      */
     const Op = Sequelize.Op;
-    return queryInterface.bulkDelete('SpotImages', {
+    options.tableName = 'SpotImages'
+    return queryInterface.bulkDelete(options, {
       spotId: { [Op.in]: [1, 2, 3] }
     }, {});
   }

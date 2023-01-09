@@ -55,9 +55,10 @@ function Navigation({ isLoaded }) {
                             setShowModal={setShowModal}
                         />
                     )}
-                    {showModal && <Modal onClose={() => setShowModal(false)}>
-                        {login ? <LoginForm setShowModal={setShowModal} /> : <SignupFormPage setShowModal={setShowModal} />}
-                    </Modal>}
+                    {showModal &&
+                        <Modal onClose={() => setShowModal(false)}>
+                            {login ? <LoginForm setShowModal={setShowModal} /> : <SignupFormPage setShowModal={setShowModal} />}
+                        </Modal>}
                 </div>
 
             </div>
