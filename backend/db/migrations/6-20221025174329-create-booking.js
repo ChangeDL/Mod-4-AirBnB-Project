@@ -43,36 +43,36 @@ module.exports = {
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
     }, options);
-    await queryInterface.addIndex('Bookings',
-      options,
-      ['spotId', 'startDate'],
-      {
-        unique: true
-      }
-    )
-    await queryInterface.addIndex('Bookings',
-      options,
-      ['userId', 'startDate'],
-      {
-        unique: true
-      }
-    )
+    // await queryInterface.addIndex('Bookings',
+    //   options,
+    //   ['spotId', 'startDate'],
+    //   {
+    //     unique: true
+    //   }
+    // )
+    // await queryInterface.addIndex('Bookings',
+    //   options,
+    //   ['userId', 'startDate'],
+    //   {
+    //     unique: true
+    //   }
+    // )
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Bookings', options);
-    await queryInterface.removeIndex('Bookings',
-      options,
-      ['spotId', 'startDate'],
-      {
-        unique: true
-      }
-    )
-    await queryInterface.removeIndex('Bookings',
-      options
-      ['userId', 'startDate'],
-      {
-        unique: true
-      }
-    )
+    // await queryInterface.removeIndex('Bookings',
+    //   options,
+    //   ['spotId', 'startDate'],
+    //   {
+    //     unique: true
+    //   }
+    // )
+    // await queryInterface.removeIndex('Bookings',
+    //   options
+    //   ['userId', 'startDate'],
+    //   {
+    //     unique: true
+    //   }
+    // )
   }
 };
