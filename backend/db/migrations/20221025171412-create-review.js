@@ -47,8 +47,8 @@ module.exports = {
     await queryInterface.addIndex(
       'Reviews',
       ['userId', 'spotId'],
-      { unique: true }
-    ), options
+      { unique: true },
+      options)
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Reviews', options);
@@ -56,6 +56,6 @@ module.exports = {
       'Reviews',
       ['userId', 'spotId'],
       { unique: true }
-    ), options
+      , options)
   }
 };
