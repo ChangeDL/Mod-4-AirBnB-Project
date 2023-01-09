@@ -18,12 +18,12 @@ module.exports = {
       spotId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        references: { model: 'Spots', key: 'id' }
+        references: { model: "Spots", key: "id" }
       },
       userId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        references: { model: 'Users', key: 'id' }
+        references: { model: "Users", key: "id" }
       },
       review: {
         type: Sequelize.STRING
@@ -47,8 +47,7 @@ module.exports = {
     await queryInterface.addIndex(
       'Reviews',
       ['userId', 'spotId'],
-      { unique: true },
-      options)
+      { unique: true })
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Reviews', options);
@@ -56,6 +55,6 @@ module.exports = {
       'Reviews',
       ['userId', 'spotId'],
       { unique: true }
-      , options)
+    )
   }
 };
