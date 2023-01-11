@@ -6,6 +6,8 @@ The project spanned over about a month and a half to 2 months. I learned how to 
 Next I learned how to make the frontend with React and Redux and worked on 2 features for my clone (Spots, and Reviews).
 This clone is a work in progress as there are still many features needing to be added at the time of creating this README. (11/20/2022)
 
+>  Live Site Link: [AtmosphereBnB](https://atmospherebnb.onrender.com/)
+
 List of Technologies Used
 
 (Backend)
