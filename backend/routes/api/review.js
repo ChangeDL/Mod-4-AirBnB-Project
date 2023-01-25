@@ -58,7 +58,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
         })
     }
 
-    const imageOnReviewLimitCheck = await SpotImages.findAll({
+    const imageOnReviewLimitCheck = await ReviewImages.findAll({
         where: { reviewId: req.params.reviewId }
     })
     if (imageOnReviewLimitCheck.length === 10) {
