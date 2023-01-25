@@ -12,7 +12,7 @@ const SpotShow = () => {
     const history = useHistory();
     spotId = +spotId
     const allSpots = useSelector((state) => state.spots)
-    const spotToShow = allSpots.spots[spotId]
+    const spotToShow = allSpots?.currentSpot
     const sessionUser = useSelector(state => state.session)
     const reviewsForSpot = useSelector(state => state.reviews)
 
@@ -53,12 +53,12 @@ const SpotShow = () => {
                         <div className='stars-reviews-location'>
                             <span>★{(Math.round(spotToShow.avgRating * 100) / 100).toFixed(1)} • </span>
                             <span>{Object.keys(reviewsForSpot.reviews).length} Reviews •</span>
-                            <span> ❖ Superhost •</span>
+                            <span> {spotToShow?.Owner.firstName} {spotToShow?.Owner.lastName} ❖ Superhost •</span>
                             <span> {spotToShow.city},{spotToShow.state},{spotToShow.country}</span>
                         </div>
                         <div className='middle-of-page'>
                             <div className='middle-left'>
-                                <img src={spotToShow.previewImage} alt='fillerForNow' className='main-image'></img>
+                                <img src={spotToShow?.SpotImages[0]?.url} alt='fillerForNow' className='main-image'></img>
                             </div>
                             <div className='middle-middle'>
                                 <img className='top-left' src='https://media.istockphoto.com/photos/freshly-painted-craftsman-bungalow-house-picture-id1415886888?b=1&k=20&m=1415886888&s=170667a&w=0&h=w8r9WQ56sXyAI8bmFGaqeK8R1sju-hdLIVupHP80GhY='></img>

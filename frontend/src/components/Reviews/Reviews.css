@@ -65,3 +65,8 @@
     flex-direction: column;
     margin-top: 1%;
 }
+
+.review-user-name {
+    font-weight: bold;
+    text-decoration: underline;
+}

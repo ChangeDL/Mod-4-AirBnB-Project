@@ -45,7 +45,7 @@ const Reviews = () => {
         <>
             <div className="header-button">
                 <h3>Reviews</h3>
-                {Object.values(sessionUser)[0] !== null && sessionUser.user.id !== spotToShow.ownerId ?
+                {Object.values(sessionUser)[0] !== null && sessionUser.user.id !== spotToShow?.ownerId ?
                     <button className="add-review" onClick={event => addReviewButton(event, spotId)}>Add Review</button>
                     : ''}
             </div>
@@ -53,8 +53,10 @@ const Reviews = () => {
                 <>
                     <div className="reviewSection">
 
-                        {Object.values(reviewsForSpot).map(({ id, userId, review, stars, createdAt }) => (
+                        {Object.values(reviewsForSpot).map(({ id, userId, review, stars, createdAt, User }) => (
                             <div key={id} className='singleReview'>
+                                <span className="review-user-name">{User?.firstName} {User?.lastName} </span>
+
                                 <span className="review"> {review} </span>
 
 
