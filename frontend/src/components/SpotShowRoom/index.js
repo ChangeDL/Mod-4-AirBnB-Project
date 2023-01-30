@@ -5,6 +5,7 @@ import Reviews from '../Reviews';
 import * as reviewActions from "../../store/reviews"
 import * as spotActions from "../../store/spots"
 import './SpotShowRoom.css'
+import BookingForm from '../BookingForm/BookingForm';
 
 const SpotShow = () => {
     const dispatch = useDispatch();
@@ -85,6 +86,7 @@ const SpotShow = () => {
                             <div className='description-text'>
                                 <span>{spotToShow.description}</span>
                             </div>
+                            <BookingForm spot={spotToShow} user={sessionUser} />
                             <Reviews />
                         </div>
                     </div>
