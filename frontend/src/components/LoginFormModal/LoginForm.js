@@ -1,5 +1,5 @@
 // frontend/src/components/LoginFormModal/LoginForm.js
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -13,6 +13,9 @@ function LoginForm({ setShowModal }) {
     const [errors, setErrors] = useState([]);
 
     const sessionUser = useSelector((state) => state.session.user);
+    useEffect(() => {
+        if (sessionUser) setShowModal(false)
+    }, [sessionUser]);
 
     if (sessionUser) return <Redirect to="/" />;
 
@@ -33,7 +36,6 @@ function LoginForm({ setShowModal }) {
         e.preventDefault();
         setErrors([]);
         return dispatch(sessionActions.login({ credential, password }))
-            .then(setShowModal(false))
             .catch(
                 async (res) => {
                     const data = await res.json();
