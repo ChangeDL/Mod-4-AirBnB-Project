@@ -1,7 +1,7 @@
 const express = require('express')
 const { requireAuth } = require('../../utils/auth');
 const { Spots, SpotImages, Review, ReviewImages, User, Booking, sequelize } = require('../../db/models');
-
+const { Op } = require('sequelize')
 const { check } = require('express-validator');
 
 const router = express.Router();
@@ -48,6 +48,7 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
     const currentBooking = await Booking.findOne({
         where: { id: req.params.bookingId }
     })
+
     if (!currentBooking) {
         res.status(404);
         return res.json({
@@ -63,58 +64,57 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
         })
     }
 
-    let currentDate = new Date();
-    currentDate = (currentDate.toJSON().split('T0')[0])
-
-    if ((currentDate > endDate) === true) {
-        res.status(403);
+    const formatStartDate = new Date(startDate);
+    const formatEndDate = new Date(endDate);
+    if (formatStartDate > formatEndDate) {
+        res.status(400)
+        return res.json({
+            message: "Validation Error",
+            statusCode: 400,
+            errors: {
+                endDate: "endDate cannot come before startDate"
+            }
+        });
+    }
+    if (new Date() >= formatEndDate) {
+        res.status(403)
         return res.json({
             message: "Past bookings can't be modified",
             statusCode: 403
-        })
+        });
     }
-    if ((startDate >= endDate) === true) {
-        res.status(403);
-        return res.json({
-            message: "End Date cannot be on or before Start Date",
-            statusCode: 403
-        })
-    }
+    const bookedSpot = await Booking.findAll({
+        where: {
+            spotId: currentBooking.spotId,
+            [Op.or]: [
+                { startDate: { [Op.between]: [formatStartDate, formatEndDate] } },
+                { endDate: { [Op.between]: [formatStartDate, formatEndDate] } }
+            ]
+        }
+    });
 
-    const formatStartDate = new Date(startDate)
-    const formatEndDate = new Date(endDate)
-
-    const findIfTimeHasAlreadyBeenBookedForSpot = await Booking.findAll({
-        where: { spotId: req.params.spotId }
-    })
-
-    const errorObj = {}
-
-    for (let i = 0; i < findIfTimeHasAlreadyBeenBookedForSpot.length; i++) {
-        const startDatesForBookings = (findIfTimeHasAlreadyBeenBookedForSpot[i].startDate)
-        const endDatesForBookings = (findIfTimeHasAlreadyBeenBookedForSpot[i].endDate)
-        if (startDatesForBookings.toDateString() === formatStartDate.toDateString()) errorObj.startDate = "Start date conflicts with an existing booking"
-        if (endDatesForBookings.toDateString() === formatEndDate.toDateString()) errorObj.endDate = "End date conflicts with an existing booking"
-    }
-
-    if (Object.keys(errorObj).length > 0) {
-        res.status(403);
-        return res.json({
-            message: "Sorry, this spot is already booked for the specified dates",
-            statusCode: 403,
-            errors: errorObj
-        })
+    for (let bookings of bookedSpot) {
+        if ((bookings.startDate <= formatStartDate && bookings.endDate <= formatEndDate)
+            || (bookings.startDate <= formatStartDate || bookings.endDate >= formatEndDate)) {
+            res.status(403)
+            return res.json({
+                message: "Sorry, this spot is already booked for the specified dates",
+                statusCode: 403,
+                errors: {
+                    startDate: "Start date conflicts with an existing booking",
+                    endDate: "End date conflicts with an existing booking"
+                }
+            });
+        }
     }
 
-
-
-    currentBooking.update({
-        startDate,
-        endDate
-    })
-    res.json(currentBooking)
-})
-
+    const updatedBooking = await currentBooking.set({
+        startDate: formatStartDate,
+        endDate: formatEndDate
+    });
+    await updatedBooking.save();
+    return res.json(updatedBooking);
+});
 
 router.delete('/:bookingId', requireAuth, async (req, res) => {
     const bookingToBeDeleted = await Booking.findOne({
