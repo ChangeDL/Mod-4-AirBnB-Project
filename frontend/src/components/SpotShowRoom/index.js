@@ -6,6 +6,7 @@ import * as reviewActions from "../../store/reviews"
 import * as spotActions from "../../store/spots"
 import './SpotShowRoom.css'
 import BookingForm from '../BookingForm/BookingForm';
+import { currentBookings } from '../../store/bookings';
 
 const SpotShow = () => {
     const dispatch = useDispatch();
@@ -37,6 +38,7 @@ const SpotShow = () => {
         dispatch(spotActions.loadSpots())
         dispatch(spotActions.currentSpot(spotId))
         dispatch(reviewActions.loadReviews(spotId))
+        dispatch(currentBookings(spotId))
     }, [dispatch])
 
 
