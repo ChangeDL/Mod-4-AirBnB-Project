@@ -16,6 +16,7 @@ import EditReviewForm from "./components/EditReviewForm";
 import ReviewForm from "./components/ReviewForm";
 import UserSpots from "./components/UserSpots";
 import SignUpFormModal from "./components/SignUpModal";
+import { bookingsByUser } from "./store/bookings";
 
 function App() {
   const dispatch = useDispatch();
@@ -28,6 +29,7 @@ function App() {
 
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
+    dispatch(bookingsByUser())
   }, [dispatch]);
 
 
