@@ -1,0 +1,17 @@
+.book-login-button-booking-form {
+    background: none;
+    border: none;
+    background-color: rgb(255, 84, 84);
+    border-radius: .75em;
+    color: white;
+    width: 5em;
+    height: 2em;
+}
+
+.book-login-button-booking-form:disabled {
+    background-color: grey;
+}
+
+.button-to-book-or-login {
+    display: flex;
+}
