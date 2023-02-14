@@ -3,11 +3,12 @@ import React, { useEffect, useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 
 
 function LoginForm({ setShowModal }) {
     const dispatch = useDispatch();
+    const history = useHistory();
     const [credential, setCredential] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState([]);
@@ -42,7 +43,7 @@ function LoginForm({ setShowModal }) {
                     if (data && data.errors) setErrors(data.errors);
                     if (data && data.message) setErrors([data.message])
                 },
-            );
+            )
     };
 
 

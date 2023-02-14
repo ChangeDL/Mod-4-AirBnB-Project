@@ -1,15 +1,23 @@
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { csrfFetch } from '../../store/csrf';
 import { useDispatch } from 'react-redux';
 import { createBooking } from '../../store/bookings';
+import LoginFormModal from '../LoginFormModal';
+import './BookingForm.css'
+import { Modal } from '../../context/Modal';
+import LoginForm from '../LoginFormModal/LoginForm';
+import SignupFormPage from '../SignupFormPage';
 
 const BookingForm = ({ spot, user }) => {
     const dispatch = useDispatch()
 
     const [date, setDate] = useState(new Date());
     const [errors, setErrors] = useState([])
+    const [login, setLogin] = useState(true)
+    const [showModal, setShowModal] = useState(false)
+    const [disable, setDisable] = useState(true)
 
 
     const spotId = +spot.id
@@ -29,6 +37,7 @@ const BookingForm = ({ spot, user }) => {
 
     const submitBooking = async (e) => {
         e.preventDefault()
+        setErrors([])
 
         const bookingToCreate = {
             spotId,
@@ -41,6 +50,11 @@ const BookingForm = ({ spot, user }) => {
             if (data && data.message) setErrors([data.message]);
         })
     }
+
+    useEffect(() => {
+        if (date.length < 2) setDisable(true)
+        else setDisable(false)
+    }, [date])
 
     return (
         <div className='app'>
@@ -67,9 +81,23 @@ const BookingForm = ({ spot, user }) => {
                     {date.toDateString()}
                 </p>
             )}
-            {spot?.Owner?.id !== user.user.id ?
-                <button onClick={e => submitBooking(e)}>Test</button>
-                : null}
+            <div className='button-to-book-or-login'>
+
+                {user.user === null ?
+                    <button
+                        className="book-login-button-booking-form"
+                        onClick={() => {
+                            setLogin(true)
+                            setShowModal(true)
+                        }}>Log In</button> : null}
+                {user.user !== null && spot?.Owner?.id !== user.user?.id ?
+                    <button onClick={e => submitBooking(e)} className='book-login-button-booking-form' disabled={disable}>Book</button>
+                    : null}
+                {showModal &&
+                    <Modal onClose={() => setShowModal(false)}>
+                        {login ? <LoginForm setShowModal={setShowModal} /> : <SignupFormPage setShowModal={setShowModal} />}
+                    </Modal>}
+            </div>
         </div>
 
     );
